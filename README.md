@@ -61,8 +61,9 @@ Please use the following contacts for providing feedback or asking questions or 
 Email me at: [natrapadwani.contact@gmail.com](mailto:natrapadwani.contact@gmail.com)
 
 Follow me on social media:
-Instagram at: [@natrajpadwani.develops](https://www.instagram.com/natrajpadwani.develops/)
-X (Twitter) at: [@PadwaniNatraj](https://twitter.com/PadwaniNatraj)
+
+- Instagram at: [@natrajpadwani.develops](https://www.instagram.com/natrajpadwani.develops/)
+- X (Twitter) at: [@PadwaniNatraj](https://twitter.com/PadwaniNatraj)
 
 For more information visit my website at [https://www.natrajpadwani.com/](https://www.natrajpadwani.com/)
 
