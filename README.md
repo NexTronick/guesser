@@ -58,12 +58,13 @@ Creative Commons Attribution-NonCommercial 4.0 International License. Read the l
 ## Contact
 
 Please use the following contacts for providing feedback or asking questions or even for job recruiting.
-["natrapadwani.contact@gmail.com"](mailto:natrapadwani.contact@gmail.com)
+Email me at: [natrapadwani.contact@gmail.com](mailto:natrapadwani.contact@gmail.com)
 
-Follow me on social media
-Instagram at ["@natrajpadwani.develops"](https://www.instagram.com/natrajpadwani.develops/)
-X (Twitter) at [@PadwaniNatraj](https://twitter.com/PadwaniNatraj)
-For more information visit my website at ["https://www.natrajpadwani.com/"](https://www.natrajpadwani.com/)
+Follow me on social media:
+Instagram at: [@natrajpadwani.develops](https://www.instagram.com/natrajpadwani.develops/)
+X (Twitter) at: [@PadwaniNatraj](https://twitter.com/PadwaniNatraj)
+
+For more information visit my website at [https://www.natrajpadwani.com/](https://www.natrajpadwani.com/)
 
 ## Acknowledgements
 
