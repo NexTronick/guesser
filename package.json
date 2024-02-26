@@ -1,0 +1,17 @@
+{
+  "name": "animal-guess",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm run start",
+    "server": "cd server && npm run dev",
+    "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" -p \"[{name}]\" \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

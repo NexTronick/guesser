@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.darkTheme {
+  color: white;
+  background-color: black;
+}
+.brightTheme {
+  color: black;
+  background-color: white;
+}
+input[type="text"] {
+  color: black !important;
+}
