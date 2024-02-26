@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm run start",
     "server": "cd server && npm run dev",
+    "clientInstall": "cd client && npm install",
+    "serverInstall": "cd server && npm install",
+    "install": "concurrently \"npm run clientInstall\" \"npm run serverInstall\"",
     "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" -p \"[{name}]\" \"npm run server\" \"npm run client\""
   },
   "author": "",

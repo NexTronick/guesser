@@ -3,7 +3,7 @@
 #server folder
 /server/node_modules
 
-#include the folder but ignore the contents
+#include the folder but ignore the
 !/server/storage/
 
 #client folder
