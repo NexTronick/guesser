@@ -261,13 +261,18 @@ async function createCloneImage(
       fs.mkdirSync(storeLocation);
       console.log("Directory created:", storeLocation);
     }
+    console.log(
+      "randomPosition:",
+      Number(randomPosition.x),
+      Number(randomPosition.y)
+    );
     await cloneImg
-      .crop(randomPosition.x, randomPosition.y, xSize, ySize)
+      .crop(Number(randomPosition.x), Number(randomPosition.y), xSize, ySize)
       .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
 
     //get buffer from cropImage new image
     let url = `http://localhost:5000/api/animal/storage/${newIp}/${index}.${imageFileType}`;
-    return { position: randomPosition, url: url };
+    return { url: url };
   } catch (e) {
     console.log(e);
     throw new Error(e);
@@ -333,14 +338,15 @@ module.exports = {
     const generatedNumbers = req.body.generatedNumbers
       ? req.body.generatedNumbers
       : [];
-    const urls = req.body.urls ? JSON.parse(req.body.urls) : [];
+    const urls = req.body.urls ? req.body.urls : [];
     const chosenPositions = req.body.chosenPositions
-      ? JSON.parse(req.body.chosenPositions)
+      ? req.body.chosenPositions
       : [];
     console.log("image", image);
     console.log("reShuffled", reShuffled);
-    console.log("generatedNumbers", generatedNumbers);
-    console.log("urls", urls);
+    //console.log("generatedNumbers", generatedNumbers);
+    console.log("urls", req.body.urls);
+    console.log("chosenPositions", chosenPositions);
     //this can adjust to make the difficulty level of the game (easier - hard) (less amount and less size makes it harder to guess)
     //changing size to width and height that can be divided equally with grid.
     let size = 150;
@@ -359,12 +365,17 @@ module.exports = {
         let newBuffer = await sharp(body).toFormat("png").toBuffer();
 
         let img = await Jimp.read(newBuffer);
-        let percentage = 20 / 100;
-        let generated = generateRandomPositions(
-          img.getWidth(),
-          img.getHeight(),
-          percentage
-        );
+        let percentage = 20 / 100; //5x5 grid size for the picture
+        //generate new numbers
+        let generated =
+          !generatedNumbers.length || !reShuffled
+            ? generateRandomPositions(
+                img.getWidth(),
+                img.getHeight(),
+                percentage
+              )
+            : generatedNumbers;
+
         console.log("Generated position length " + generated.positions.length);
         var images = await getRandomAnimalImage(
           chosenPositions,
@@ -376,7 +387,7 @@ module.exports = {
           amount,
           req.ip
         );
-
+        console.log("images:", images);
         //use the new buffer to get the images
         // var imageBuffers = await getRandomBuffersWithImageType(
         //   generatedNumbers,
@@ -389,6 +400,7 @@ module.exports = {
         res.status(200);
         res.json({
           //imageBuffers: imageBuffers,
+          generatedNumbers: generated,
           images: images,
         });
         res.end();

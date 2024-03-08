@@ -11,6 +11,7 @@ import { ImagePositonType } from "../AllTypes";
 interface Props {
   image: string;
   partialImages: Array<string>;
+  chosenPositions: Array<ImagePositonType>;
   generatedNumbers: Array<ImagePositonType>;
 }
 
@@ -32,12 +33,12 @@ function SeperateImage(props: Props) {
   //   showImages(props.partialImages)
   // );
   const [imageSrc, setImageSrc] = useState<string>(props.image);
-  const [partialImages, setPartialImages] = useState<string[]>(
+  const [partialImages, setPartialImages] = useState<Array<string>>(
     props.partialImages
   );
-  const [generatedNumbers, setGeneratedNumbers] = useState(
-    props.generatedNumbers
-  );
+  const [chosenPositions, setChosenPositions] = useState<
+    Array<ImagePositonType>
+  >(props.chosenPositions);
   const { images } = useImages(partialImages);
 
   useEffect(() => {
@@ -46,10 +47,12 @@ function SeperateImage(props: Props) {
   }, [props]);
 
   const reshuffleImage = async () => {
+    console.log(JSON.stringify(partialImages));
     let randomImage = await axios.post("/api/animal/random/img", {
       image: imageSrc,
       reShuffled: true,
-      generatedNumbers: generatedNumbers,
+      generatedNumbers: props.generatedNumbers,
+      chosenPositions: chosenPositions,
       urls: partialImages,
     });
 
@@ -59,11 +62,11 @@ function SeperateImage(props: Props) {
     }
 
     //load from urls
-    console.log(randomImage.data.imageBuffers.urls);
+    console.log(randomImage.data.images.urls);
 
-    const urls = randomImage.data.imageBuffers.urls;
+    const urls = randomImage.data.images.urls;
     setPartialImages(urls);
-    setGeneratedNumbers(randomImage.data.imageBuffers.generatedNumbers);
+    setChosenPositions(randomImage.data.images.chosenPositions);
 
     // const newImg = showImages(urls);
     // setImgs(newImg);

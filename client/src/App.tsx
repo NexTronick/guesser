@@ -6,7 +6,9 @@ import FormGuessAnswer from "./components/FormGuessAnswer";
 
 function App() {
   const [animalData, setAnimalData] = useState<AnimalType>();
-  const [partialImages, setPartialImages] = useState<Array<string>>();
+  const [partialImages, setPartialImages] = useState<string[]>();
+  const [chosenPositions, setChosenPositions] =
+    useState<Array<ImagePositonType>>();
   const [generatedNumbers, setGeneratedNumbers] =
     useState<Array<ImagePositonType>>();
   const [darkTheme, setDarkTheme] = useState(false);
@@ -52,11 +54,9 @@ function App() {
     }
 
     //load from urls
-    console.log(randomImage.data.imageBuffers.urls);
-
-    const urls = randomImage.data.imageBuffers.urls;
-    setPartialImages(urls);
-    setGeneratedNumbers(randomImage.data.imageBuffers.generatedNumbers);
+    setPartialImages(randomImage.data.images.urls);
+    setGeneratedNumbers(randomImage.data.generatedNumbers);
+    setChosenPositions(randomImage.data.images.chosenPositions);
   };
 
   const handleModeChange = (e: any) => {
@@ -98,6 +98,7 @@ function App() {
         <h1 className=" text-xl">Loaded Data Here: </h1>
         {animalData == null ||
         partialImages == null ||
+        chosenPositions == null ||
         generatedNumbers == null ? (
           ""
         ) : (
@@ -105,6 +106,7 @@ function App() {
             <SeperateImage
               image={animalData?.image}
               partialImages={partialImages}
+              chosenPositions={chosenPositions}
               generatedNumbers={generatedNumbers}
             />
             <FormGuessAnswer
