@@ -36,6 +36,7 @@ function SeperateImage(props: Props) {
   const [partialImages, setPartialImages] = useState<Array<string>>(
     props.partialImages
   );
+  const [reshuffle, setReshuffle] = useState<boolean>(false);
   const [chosenPositions, setChosenPositions] = useState<
     Array<ImagePositonType>
   >(props.chosenPositions);
@@ -44,6 +45,7 @@ function SeperateImage(props: Props) {
   useEffect(() => {
     setImageSrc(props.image);
     setPartialImages(props.partialImages);
+    setReshuffle(false);
   }, [props]);
 
   const reshuffleImage = async () => {
@@ -67,13 +69,13 @@ function SeperateImage(props: Props) {
     const urls = randomImage.data.images.urls;
     setPartialImages(urls);
     setChosenPositions(randomImage.data.images.chosenPositions);
-
+    setReshuffle(true);
     // const newImg = showImages(urls);
     // setImgs(newImg);
   };
 
-  return (
-    <div className=" ">
+  const showReshuffle = () => {
+    return !reshuffle ? (
       <button
         onClick={reshuffleImage}
         type="button"
@@ -81,15 +83,23 @@ function SeperateImage(props: Props) {
       >
         Reshuffle
       </button>
-      <div className="flex justify-center">
+    ) : (
+      ""
+    );
+  };
+
+  return (
+    <div className=" ">
+      {showReshuffle()}
+      {/* <div className="flex justify-center">
         <img
           src={imageSrc + "?" + new Date().getTime()}
           alt="animal"
           width={400}
         />
-      </div>
+      </div> */}
       <div id="showImages" className="justify-center flex">
-        <div id="partial-images" className="rows">
+        <div id="partial-images" className="grid grid-cols-3 gap-2">
           {images.map((image) => image)}
         </div>
       </div>

@@ -13,7 +13,7 @@ function DisplayImage(props: Props) {
   }, [props.url]);
 
   return (
-    <>
+    <div>
       <img
         ref={imgRef.current}
         src={url + "?" + new Date().getTime()}
@@ -22,7 +22,7 @@ function DisplayImage(props: Props) {
         height={100}
         width={100}
       />
-    </>
+    </div>
   );
 }
 
