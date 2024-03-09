@@ -24,7 +24,6 @@ function App() {
   const handleRandom = async () => {
     try {
       let randomAnimal = await axios.get("/api/animal/random");
-      //let test = await axios.get("/api/animal/test");
       if (randomAnimal.status !== 200) {
         return;
       }
@@ -57,6 +56,8 @@ function App() {
     setPartialImages(randomImage.data.images.urls);
     setGeneratedNumbers(randomImage.data.generatedNumbers);
     setChosenPositions(randomImage.data.images.chosenPositions);
+    console.log(chosenPositions);
+    console.log(randomImage.data.images.chosenPositions);
   };
 
   const handleModeChange = (e: any) => {

@@ -45,6 +45,7 @@ function SeperateImage(props: Props) {
   useEffect(() => {
     setImageSrc(props.image);
     setPartialImages(props.partialImages);
+    setChosenPositions(props.chosenPositions);
     setReshuffle(false);
   }, [props]);
 

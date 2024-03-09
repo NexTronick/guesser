@@ -266,6 +266,9 @@ async function createCloneImage(
       Number(randomPosition.x),
       Number(randomPosition.y)
     );
+
+    console.log(cloneImg.getWidth(), cloneImg.getHeight());
+
     await cloneImg
       .crop(Number(randomPosition.x), Number(randomPosition.y), xSize, ySize)
       .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
