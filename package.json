@@ -12,7 +12,7 @@
     "install": "concurrently \"npm run clientInstall\" \"npm run serverInstall\"",
     "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" -p \"[{name}]\" \"npm run server\" \"npm run client\""
   },
-  "author": "",
+  "author": "Natraj Padwani",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"

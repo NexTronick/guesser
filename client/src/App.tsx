@@ -3,6 +3,7 @@ import axios from "axios";
 import type { AnimalType, ImagePositonType } from "./AllTypes";
 import SeperateImage from "./components/SeperateImage";
 import FormGuessAnswer from "./components/FormGuessAnswer";
+import Counter from "./features/counter/Counter";
 
 function App() {
   const [animalData, setAnimalData] = useState<AnimalType>();
@@ -76,6 +77,7 @@ function App() {
   return (
     <div className="App text-center">
       <h1 className="text-3xl font-bold underline">Guess the Animal</h1>
+      <Counter></Counter>
       <label className="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
