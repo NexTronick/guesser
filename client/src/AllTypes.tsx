@@ -11,8 +11,11 @@ export interface AnimalType {
 //   type: string;
 // }
 
-
 export interface ImagePositonType {
   x: number;
   y: number;
+}
+
+export interface ThemeType {
+  value: "light" | "dark";
 }

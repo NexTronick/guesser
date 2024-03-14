@@ -25,7 +25,6 @@ export const imagePositionSlice = createSlice({
 
 export const { setImagePosition } = imagePositionSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value;
+export const selectImagePosition = (state: RootState) => state.imagePosition;
 
 export default imagePositionSlice.reducer;

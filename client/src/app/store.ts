@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 import animalReducer from "../features/animal/animalSlice";
 import imagePositionReducer from "../features/imagePosition/imagePositionSlice";
+import themeReducer from "../features/theme/themeSlice";
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     animal: animalReducer,
     imagePosition: imagePositionReducer,
+    theme: themeReducer,
   },
 });
 

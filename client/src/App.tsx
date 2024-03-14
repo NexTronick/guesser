@@ -3,7 +3,7 @@ import axios from "axios";
 import type { AnimalType, ImagePositonType } from "./AllTypes";
 import SeperateImage from "./components/SeperateImage";
 import FormGuessAnswer from "./components/FormGuessAnswer";
-import Counter from "./features/counter/Counter";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [animalData, setAnimalData] = useState<AnimalType>();
@@ -61,13 +61,6 @@ function App() {
     console.log(randomImage.data.images.chosenPositions);
   };
 
-  const handleModeChange = (e: any) => {
-    let html = document.getElementsByTagName("html")[0];
-
-    html.className = !darkTheme ? "darkTheme" : "brightTheme";
-    console.log(!darkTheme);
-    setDarkTheme(!darkTheme);
-  };
   window.onload = () => {
     loadData();
   };
@@ -76,18 +69,9 @@ function App() {
   };
   return (
     <div className="App text-center">
-      <h1 className="text-3xl font-bold underline">Guess the Animal</h1>
-      <Counter></Counter>
-      <label className="relative inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          value=""
-          className="sr-only peer"
-          onChange={handleModeChange}
-        />
-        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-        <span className="ms-3 text-sm font-medium">Change Theme</span>
-      </label>
+      {/* <Counter></Counter> */}
+      <NavBar />
+      <h1 className="text-3xl font-bold underline m-2">Guess the Animal</h1>
       <button
         type="button"
         id="loadButton"
@@ -96,7 +80,6 @@ function App() {
       >
         Start
       </button>
-
       <div className="main mt-12">
         <h1 className=" text-xl">Loaded Data Here: </h1>
         {animalData == null ||
