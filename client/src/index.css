@@ -13,3 +13,24 @@
 input[type="text"] {
   color: black !important;
 }
+.brightTheme .FormControl.Mui-selected {
+  color: black !important;
+  border-color: #8d8d8d;
+}
+.darkTheme .FormControl fieldset,
+.darkTheme .FormControl svg,
+.darkTheme .FormControl label,
+.darkTheme .FormControl span,
+.darkTheme .FormControl div {
+  color: white !important;
+  border-color: white !important;
+}
+
+.brightTheme .FormControl fieldset,
+.brightTheme .FormControl svg,
+.brightTheme .FormControl label,
+.brightTheme .FormControl span,
+.brightTheme .FormControl div {
+  color: rgb(0, 0, 0) !important;
+  border-color: rgb(137, 137, 137) !important;
+}

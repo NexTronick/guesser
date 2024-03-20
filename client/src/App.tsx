@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import type { AnimalType, ImagePositonType } from "./AllTypes";
 import SeperateImage from "./components/SeperateImage";
 import FormGuessAnswer from "./components/FormGuessAnswer";
 import NavBar from "./components/NavBar";
+import GameSettings from "./pages/GameSettings";
+import Game from "./pages/Game";
 
 function App() {
   const [animalData, setAnimalData] = useState<AnimalType>();
@@ -101,6 +104,17 @@ function App() {
             />
           </>
         )}
+      </div>
+      <div className="layout">
+        <div className="nav"></div>
+        <div className="main-content">
+          <Router>
+            <Routes>
+              <Route path="/" element={<GameSettings />}></Route>
+              <Route path="/play" element={<Game />}></Route>
+            </Routes>
+          </Router>
+        </div>
       </div>
     </div>
   );
