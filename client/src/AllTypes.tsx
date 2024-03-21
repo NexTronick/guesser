@@ -11,6 +11,18 @@ export interface AnimalType {
 //   type: string;
 // }
 
+export interface ImageDataType {
+  generatedNumbers: {
+    positions: Array<ImagePositonType>;
+    xSize: number;
+    ySize: number;
+  };
+  images: {
+    chosenPositions: Array<ImagePositonType>;
+    urls: Array<string>;
+  };
+}
+
 export interface ImagePositonType {
   x: number;
   y: number;

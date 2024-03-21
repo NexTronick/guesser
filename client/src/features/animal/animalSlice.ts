@@ -3,13 +3,13 @@ import type { RootState } from "../../app/store";
 import type { AnimalType } from "../../AllTypes";
 
 //Interface Animal
-interface Animal {
-  animal: AnimalType;
+export interface Animal {
+  value: AnimalType;
 }
 
 // Define the initial state using that type
 const initialState: Animal = {
-  animal: {
+  value: {
     animal: "",
     image: "",
     fact: "",
@@ -24,7 +24,7 @@ export const animalSlice = createSlice({
   initialState,
   reducers: {
     setAnimal: (state, action: PayloadAction<AnimalType>) => {
-      state.animal = action.payload;
+      state.value = action.payload;
     },
   },
 });

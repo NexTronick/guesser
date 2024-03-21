@@ -3,12 +3,16 @@ import counterReducer from "../features/counter/counterSlice";
 import animalReducer from "../features/animal/animalSlice";
 import imagePositionReducer from "../features/imagePosition/imagePositionSlice";
 import themeReducer from "../features/theme/themeSlice";
+import gameSettingsReducer from "../features/gameSettings/gameSettingsSlice";
+import imageDataSlice from "../features/imageData/imageDataSlice";
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     animal: animalReducer,
     imagePosition: imagePositionReducer,
     theme: themeReducer,
+    gameSettings: gameSettingsReducer,
+    imageData: imageDataSlice,
   },
 });
 
