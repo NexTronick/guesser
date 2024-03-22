@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import type { RootState } from "../../app/store";
 import { useAppDispatch } from "../../app/hooks";
 import { setAnimal, Animal } from "../animal/animalSlice";
-import { setImageData, ImageData } from "../imageData/imageDataSlice";
+import { setImageData } from "../imageData/imageDataSlice";
 import type { AnimalType, ImageDataType } from "../../AllTypes";
 import axios from "axios";
 // Define a type for the slice state

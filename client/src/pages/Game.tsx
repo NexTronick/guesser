@@ -1,9 +1,13 @@
 import React from "react";
+import SeperateImage from "../components/SeperateImage";
 
 function Game() {
   return (
     <div className="">
-      <h1>This is where the game starts</h1>
+      <h1>Guess</h1>
+      <div>
+        <SeperateImage  />
+      </div>
     </div>
   );
 }

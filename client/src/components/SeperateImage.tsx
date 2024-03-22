@@ -7,20 +7,26 @@ import React, {
   useCallback,
 } from "react";
 import DisplayImage from "./DisplayImage";
-import { ImagePositonType } from "../AllTypes";
+import { ImageDataType, ImagePositonType } from "../AllTypes";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  selectImageData,
+  setImageData,
+} from "../features/imageData/imageDataSlice";
+import { selectAnimal } from "../features/animal/animalSlice";
 interface Props {
   image: string;
-  partialImages: Array<string>;
+  urls: Array<string>;
   chosenPositions: Array<ImagePositonType>;
   generatedNumbers: Array<ImagePositonType>;
 }
 
 //runing useEffect for shuffle
-const useImages = (partialImages: Array<string>) => {
+const useImages = (urls: Array<string>) => {
   const [images, updateImages] = useState<Array<any>>([]);
   useEffect(() => {
-    updateImages(showImages(partialImages));
-  }, [partialImages]);
+    updateImages(showImages(urls));
+  }, [urls]);
   return { images };
 };
 
@@ -28,49 +34,56 @@ const showImages = (urls: Array<string>) => {
   return urls.map((url: string, i) => <DisplayImage url={url} key={i} />);
 };
 
-function SeperateImage(props: Props) {
-  // const [imgs, setImgs] = useState<JSX.Element[]>(
-  //   showImages(props.partialImages)
-  // );
-  const [imageSrc, setImageSrc] = useState<string>(props.image);
-  const [partialImages, setPartialImages] = useState<Array<string>>(
-    props.partialImages
-  );
+function SeperateImage() {
+  const dispatch = useAppDispatch();
+  const animal = useAppSelector(selectAnimal);
+  const imageData = useAppSelector(selectImageData);
   const [reshuffle, setReshuffle] = useState<boolean>(false);
-  const [chosenPositions, setChosenPositions] = useState<
-    Array<ImagePositonType>
-  >(props.chosenPositions);
-  const { images } = useImages(partialImages);
+
+  //const [imageSrc, setImageSrc] = useState<string>(animal.value.image);
+  // const [urls, setUrls] = useState<Array<string>>(imageData.images.urls);
+  // const [chosenPositions, setChosenPositions] = useState<
+  //   Array<ImagePositonType>
+  // >(imageData.images.chosenPositions);
+  const { images } = useImages(imageData.images.urls);
+
+  // useEffect(() => {
+  //   setImageSrc(props.image);
+  //   setUrls(props.urls);
+  //   setChosenPositions(props.chosenPositions);
+  //   setReshuffle(false);
+  // }, [props]);
 
   useEffect(() => {
-    setImageSrc(props.image);
-    setPartialImages(props.partialImages);
-    setChosenPositions(props.chosenPositions);
-    setReshuffle(false);
-  }, [props]);
+    console.log("new animal added: called in SeperateImages");
+  }, [animal]);
 
   const reshuffleImage = async () => {
-    console.log(JSON.stringify(partialImages));
+    // console.log(JSON.stringify(urls));
     let randomImage = await axios.post("/api/animal/random/img", {
-      image: imageSrc,
+      image: animal.value.image,
       reShuffled: true,
-      generatedNumbers: props.generatedNumbers,
-      chosenPositions: chosenPositions,
-      urls: partialImages,
+      generatedNumbers: imageData.generatedNumbers,
+      chosenPositions: imageData.images.chosenPositions,
+      urls: imageData.images.urls,
     });
 
+    console.log(randomImage);
     //checks for status result
     if (randomImage.status !== 200) {
       return;
     }
+    const randomImageData: ImageDataType = randomImage.data;
+    //update the imageData redux
+    dispatch(setImageData(randomImageData));
 
-    //load from urls
-    console.log(randomImage.data.images.urls);
+    setReshuffle(false);
+    // console.log(randomImage.data.images.urls);
 
-    const urls = randomImage.data.images.urls;
-    setPartialImages(urls);
-    setChosenPositions(randomImage.data.images.chosenPositions);
-    setReshuffle(true);
+    // const urls = randomImage.data.images.urls;
+    // setUrls(urls);
+    // setChosenPositions(randomImage.data.images.chosenPositions);
+    // setReshuffle(true);
     // const newImg = showImages(urls);
     // setImgs(newImg);
   };

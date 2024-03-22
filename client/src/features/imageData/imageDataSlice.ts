@@ -3,22 +3,20 @@ import type { RootState } from "../../app/store";
 import type { ImageDataType } from "../../AllTypes";
 
 //interface use ImageDataType
-export interface ImageData {
-  value: ImageDataType;
-}
+// export interface ImageData {
+//   value: ImageDataType;
+// }
 
 // Define the initial state using that type
-const initialState: ImageData = {
-  value: {
-    generatedNumbers: {
-      positions: [{ x: 0, y: 0 }],
-      xSize: 0,
-      ySize: 0,
-    },
-    images: {
-      chosenPositions: [{ x: 0, y: 0 }],
-      urls: [""],
-    },
+const initialState: ImageDataType = {
+  generatedNumbers: {
+    positions: [{ x: 0, y: 0 }],
+    xSize: 0,
+    ySize: 0,
+  },
+  images: {
+    chosenPositions: [{ x: 0, y: 0 }],
+    urls: [""],
   },
 };
 
@@ -28,7 +26,14 @@ export const imageDataSlice = createSlice({
   initialState,
   reducers: {
     setImageData: (state, action: PayloadAction<ImageDataType>) => {
-      state.value = action.payload;
+      state.generatedNumbers = action.payload.generatedNumbers;
+      state.images = action.payload.images;
+    },
+    setPartialImages: (
+      state,
+      action: PayloadAction<typeof initialState.images>
+    ) => {
+      state.images = action.payload;
     },
   },
 });
