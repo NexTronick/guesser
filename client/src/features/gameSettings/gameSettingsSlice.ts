@@ -79,6 +79,7 @@ async function loadGameSettings(gameSettings: GameSettingsType) {
   let randomImage = await axios.post("/api/animal/random/img", {
     image: animal.image,
     reShuffled: false,
+    difficulty: gameSettings.difficulty,
   });
 
   //checks for status result

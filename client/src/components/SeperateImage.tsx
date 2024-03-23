@@ -77,6 +77,7 @@ function SeperateImage() {
     let randomImage = await axios.post("/api/animal/random/img", {
       image: animal.value.image,
       reShuffled: true,
+      difficulty: gameSettings.difficulty,
       generatedNumbers: imageData.generatedNumbers,
       chosenPositions: imageData.images.chosenPositions,
       urls: imageData.images.urls,

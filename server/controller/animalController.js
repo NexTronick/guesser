@@ -345,15 +345,15 @@ module.exports = {
     const chosenPositions = req.body.chosenPositions
       ? req.body.chosenPositions
       : [];
-    console.log("image", image);
-    console.log("reShuffled", reShuffled);
-    //console.log("generatedNumbers", generatedNumbers);
-    console.log("urls", req.body.urls);
-    console.log("chosenPositions", chosenPositions);
+    const difficulty = req.body.difficulty;
+
+    // console.log("image", image);
+    // console.log("reShuffled", reShuffled);
+    // //console.log("generatedNumbers", generatedNumbers);
+    // console.log("urls", req.body.urls);
+    // console.log("chosenPositions", chosenPositions);
     //this can adjust to make the difficulty level of the game (easier - hard) (less amount and less size makes it harder to guess)
     //changing size to width and height that can be divided equally with grid.
-    let size = 150;
-    let amount = 3;
 
     console.log(image);
     try {
@@ -368,7 +368,9 @@ module.exports = {
         let newBuffer = await sharp(body).toFormat("png").toBuffer();
 
         let img = await Jimp.read(newBuffer);
-        let percentage = 20 / 100; //5x5 grid size for the picture
+        let amount = 3;
+        let size = 100 / difficulty.value; //convert to a division of value
+        let percentage = size / 100; //(value x value) grid size for the picture
         //generate new numbers
         let generated =
           !generatedNumbers.length || !reShuffled
