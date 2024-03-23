@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../app/store";
 import type { ThemeType } from "../../AllTypes";
+import { useCookies } from "react-cookie";
 
 // Define the initial state using that type
 const initialState: ThemeType = {

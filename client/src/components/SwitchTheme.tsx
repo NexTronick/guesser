@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { setTheme } from "../features/theme/themeSlice";
+import { setTheme, selectTheme } from "../features/theme/themeSlice";
 import { ThemeType } from "../AllTypes";
 import { MdDarkMode } from "react-icons/md";
 import { IconContext } from "react-icons";
 import { MdLightMode } from "react-icons/md";
+import { useCookies } from "react-cookie";
 
 function SwtichTheme() {
-  const theme = useAppSelector((state) => state.theme.value);
+  const [cookie, setCookie] = useCookies();
+  const theme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
   //   const [onHoverState, onHoverStateChange] = useState(false);
 
   const handleModeChange = (e: any) => {
     let html = document.getElementsByTagName("html")[0];
-
-    html.className = theme === "light" ? "darkTheme" : "brightTheme";
+    let themeStyle = theme === "light" ? "darkTheme" : "brightTheme";
+    html.className = themeStyle;
     let newTheme: ThemeType =
       theme === "light" ? { value: "dark" } : { value: "light" };
 
     dispatch(setTheme(newTheme));
+    let date = new Date(Date.now());
+    date.setMonth(date.getMonth() + 1);
+    setCookie("theme", newTheme.value, { path: "/", expires: date });
   };
   return (
     <div className="m-2 relative float-right">

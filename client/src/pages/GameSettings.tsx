@@ -26,10 +26,6 @@ function GameSettings() {
 
   return (
     <div>
-      <h1>
-        {gameSettings.difficulty.text + " " + gameSettings.difficulty.value}
-        {gameSettings.guessItem.text + " " + gameSettings.guessItem.value}
-      </h1>
       <h1 className="text-3xl">Game Settings</h1>
       <div className="mt-30">
         <div>
