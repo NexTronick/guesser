@@ -5,6 +5,8 @@ import imagePositionReducer from "../features/imagePosition/imagePositionSlice";
 import themeReducer from "../features/theme/themeSlice";
 import gameSettingsReducer from "../features/gameSettings/gameSettingsSlice";
 import imageDataSlice from "../features/imageData/imageDataSlice";
+import dataStatusReducer from "../features/dataStatus/dataStatusSlice";
+
 const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -13,6 +15,7 @@ const store = configureStore({
     theme: themeReducer,
     gameSettings: gameSettingsReducer,
     imageData: imageDataSlice,
+    dataStatus: dataStatusReducer,
   },
 });
 

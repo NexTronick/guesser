@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import type { AnimalType } from "../AllTypes";
-interface Props {
-  animalName: string;
-  getFactAndReshuffle: Function;
-}
-function FormGuessAnswer(props: Props) {
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { selectAnimal } from "../features/animal/animalSlice";
+import {
+  loadAnimalWithGameSettingsThunk,
+  selectGameSettings,
+} from "../features/gameSettings/gameSettingsSlice";
+// interface Props {
+//   animalName: string;
+//   getFactAndReshuffle: Function;
+// }
+function FormGuessAnswer() {
   const [answer, setAnswer] = useState<string>("");
+  const animal = useAppSelector(selectAnimal);
+  const gameSettings = useAppSelector(selectGameSettings);
+  const dispatch = useAppDispatch();
+
   const submitHandler = (event: any) => {
     event.preventDefault();
-    const animal = event.target.animal.value;
-    if (props.animalName === animal.toLowerCase()) {
+    const check = event.target.animal.value;
+    if (animal.value.animal === check.toLowerCase()) {
       event.target.animal.value = "";
       alert("Yay! you got it right!");
-      props.getFactAndReshuffle();
+      dispatch(loadAnimalWithGameSettingsThunk(gameSettings));
     } else {
       alert("Ooops! you got it wrong. Try again!");
     }

@@ -6,6 +6,7 @@ import { setAnimal, Animal } from "../animal/animalSlice";
 import { setImageData } from "../imageData/imageDataSlice";
 import type { AnimalType, ImageDataType } from "../../AllTypes";
 import axios from "axios";
+import { setStatus, Status } from "../dataStatus/dataStatusSlice";
 // Define a type for the slice state
 export interface GameSettingsType {
   difficulty: { text: string; value: number };
@@ -29,14 +30,6 @@ export const gameSettingsSlice = createSlice({
       state.difficulty = action.payload.difficulty;
       state.guessItem = action.payload.guessItem;
     },
-    // setGameSettingsFailure: (
-    //   state,
-    //   action: PayloadAction<GameSettingsType>
-    // ) => {
-    //   // state.difficulty = state.difficulty;
-    //   // state.guessItem = state.guessItem;
-    //   console.log("Failed");
-    // },
   },
 });
 
@@ -44,21 +37,6 @@ export const { setGameSettings } = gameSettingsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGameSettings = (state: RootState) => state.gameSettings;
-
-// export const thunkMiddleware =
-//   (gameSettings: GameSettingsType) =>
-//   ({ dispatch, getState }: { dispatch: any; getState: any }) =>
-//   (next: any) =>
-//   (action: any) => {
-//     // If the "action" is actually a function instead...
-//     if (typeof action === "function") {
-//       // then call the function and pass `dispatch` and `getState` as arguments
-//       return action(dispatch, getState);
-//     }
-
-//     // Otherwise, it's a normal action - send it onwards
-//     return next(action);
-//   };
 
 export const loadAnimalWithGameSettingsThunk =
   (
@@ -70,16 +48,18 @@ export const loadAnimalWithGameSettingsThunk =
       if (!gameSettings) {
         return false;
       }
-      //dispatch(setGameSettings(gameSettings));
+      dispatch(setGameSettings(gameSettings));
+      dispatch(setStatus(Status.Loading));
 
       const data = await loadGameSettings(gameSettings);
 
       if (data?.animal == null || data?.imageData == null) {
         return false;
       }
-      dispatch(setGameSettings(gameSettings));
+      //dispatch(setGameSettings(gameSettings));
       dispatch(setAnimal(data.animal));
       dispatch(setImageData(data.imageData));
+      dispatch(setStatus(Status.Loaded));
       // const newDispatch = useAppDispatch();
       // newDispatch();
     } catch (error) {

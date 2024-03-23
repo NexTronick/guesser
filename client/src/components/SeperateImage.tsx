@@ -9,11 +9,14 @@ import React, {
 import DisplayImage from "./DisplayImage";
 import { ImageDataType, ImagePositonType } from "../AllTypes";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import {
+import imageDataSlice, {
   selectImageData,
   setImageData,
 } from "../features/imageData/imageDataSlice";
 import { selectAnimal } from "../features/animal/animalSlice";
+import { selectGameSettings } from "../features/gameSettings/gameSettingsSlice";
+import Loading from "./Loading";
+import { Status, selectStatus } from "../features/dataStatus/dataStatusSlice";
 interface Props {
   image: string;
   urls: Array<string>;
@@ -37,8 +40,12 @@ const showImages = (urls: Array<string>) => {
 function SeperateImage() {
   const dispatch = useAppDispatch();
   const animal = useAppSelector(selectAnimal);
+  const gameSettings = useAppSelector(selectGameSettings);
   const imageData = useAppSelector(selectImageData);
+  const status = useAppSelector(selectStatus);
+
   const [reshuffle, setReshuffle] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   //const [imageSrc, setImageSrc] = useState<string>(animal.value.image);
   // const [urls, setUrls] = useState<Array<string>>(imageData.images.urls);
@@ -56,7 +63,14 @@ function SeperateImage() {
 
   useEffect(() => {
     console.log("new animal added: called in SeperateImages");
-  }, [animal]);
+
+    if (status.status === Status.Loaded) {
+      setLoading(false);
+    } else {
+      setReshuffle(false);
+      setLoading(true);
+    }
+  }, [animal, imageData, status]);
 
   const reshuffleImage = async () => {
     // console.log(JSON.stringify(urls));
@@ -77,15 +91,7 @@ function SeperateImage() {
     //update the imageData redux
     dispatch(setImageData(randomImageData));
 
-    setReshuffle(false);
-    // console.log(randomImage.data.images.urls);
-
-    // const urls = randomImage.data.images.urls;
-    // setUrls(urls);
-    // setChosenPositions(randomImage.data.images.chosenPositions);
-    // setReshuffle(true);
-    // const newImg = showImages(urls);
-    // setImgs(newImg);
+    setReshuffle(true);
   };
 
   const showReshuffle = () => {
@@ -105,16 +111,16 @@ function SeperateImage() {
   return (
     <div className=" ">
       {showReshuffle()}
-      {/* <div className="flex justify-center">
-        <img
-          src={imageSrc + "?" + new Date().getTime()}
-          alt="animal"
-          width={400}
-        />
-      </div> */}
+
       <div id="showImages" className="justify-center flex">
         <div id="partial-images" className="grid grid-cols-3 gap-2">
-          {images.map((image) => image)}
+          {loading ? (
+            <div className=" col-span-3">
+              <Loading />
+            </div>
+          ) : (
+            images.map((image) => image)
+          )}
         </div>
       </div>
     </div>
