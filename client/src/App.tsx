@@ -17,9 +17,8 @@ function App() {
   const theme = useAppSelector(selectTheme);
 
   useEffect(() => {
-    if (cookie["theme"]) {
-      dispatch(setTheme(cookie["theme"]));
-      setThemeHTML(cookie["theme"]);
+    if (cookie["theme"] != undefined) {
+      setThemeHTML({ value: cookie.theme });
     }
   }, []);
 

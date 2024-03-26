@@ -1,16 +1,13 @@
 import React from "react";
 import SwtichTheme from "./SwitchTheme";
+import Header from "./Header";
 
 function NavBar() {
   return (
     <div className="">
-      <SwtichTheme />
-      <nav className="flex justify-center">
-        <ul>
-          <li>Games</li>
-          <li>Play</li>
-        </ul>
-      </nav>
+      {/* <SwtichTheme /> */}
+      <Header />
+      {/* <nav className="flex justify-center"></nav> */}
     </div>
   );
 }
