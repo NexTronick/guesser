@@ -25,7 +25,7 @@ export default function SelectSettings(props: Props) {
 
   return (
     <FormControl
-      sx={{ m: 1, minWidth: 120 }}
+      sx={{ m: 1, minWidth: 120, marginTop: "15px" }}
       size="medium"
       className="w-1/2 md:w-48 FormControl"
     >

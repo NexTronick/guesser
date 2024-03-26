@@ -27,7 +27,7 @@ function GameSettings() {
   return (
     <div>
       <h1 className="text-3xl">Game Settings</h1>
-      <div className="mt-30">
+      <div className="mt-5">
         <div>
           <SelectSettings
             label="Difficulty"
@@ -42,7 +42,7 @@ function GameSettings() {
             onChange={setGuessItem}
           />
         </div>
-        <div className="mt-2 flex justify-center">
+        <div className="mt-4 flex justify-center">
           <ButtonVarient
             theme="light"
             color="primary"

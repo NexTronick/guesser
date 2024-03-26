@@ -34,7 +34,7 @@ function App() {
         <div className="nav">
           <NavBar />
         </div>
-        <div className="main-content">
+        <div className="main-content mt-20">
           <Router>
             <Routes>
               <Route path="/" element={<GameSettings />}></Route>

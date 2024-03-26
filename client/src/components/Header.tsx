@@ -86,7 +86,14 @@ export default function Header() {
   return (
     <AppBar
       position="static"
-      style={{ backgroundColor: "transparent", borderColor: "transparent" }}
+      sx={{
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+        boxShadow:
+          theme === "light"
+            ? "0px 1px 1px -1px rgba(0,0,0,0.16),0px 2px 2px 0px rgba(0,0,0,0.12),0px 1px 5px 0px rgba(0,0,0,0.08) !important"
+            : "0px 1px 1px -1px rgba(255,255,255,0.16),0px 2px 2px 0px rgba(255,255,255,0.12),0px 1px 5px 0px rgba(255,255,255,0.08) !important",
+      }}
     >
       <Toolbar className="flex justify-center">
         {/* Logo on the left style={{ flexGrow: 1 }}      style={{ marginRight: "auto" }}*/}
@@ -133,8 +140,8 @@ export default function Header() {
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   bgcolor: "background.paper",
-                  border: "2px solid #000",
-                  boxShadow: 24,
+                  // border: "2px solid #000",
+                  // boxShadow: 24,
                   p: 4,
                   //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                   maxHeight: "500px",
