@@ -17,6 +17,11 @@ import { selectAnimal } from "../features/animal/animalSlice";
 import { selectGameSettings } from "../features/gameSettings/gameSettingsSlice";
 import Loading from "./Loading";
 import { Status, selectStatus } from "../features/dataStatus/dataStatusSlice";
+import { selectTheme } from "../features/theme/themeSlice";
+import ButtonVarient from "./parts/ButtonVarient";
+import { IoMdRefresh } from "react-icons/io";
+import { IconButton, Typography } from "@mui/material";
+
 interface Props {
   image: string;
   urls: Array<string>;
@@ -43,6 +48,7 @@ function SeperateImage() {
   const gameSettings = useAppSelector(selectGameSettings);
   const imageData = useAppSelector(selectImageData);
   const status = useAppSelector(selectStatus);
+  const theme = useAppSelector(selectTheme);
 
   const [reshuffle, setReshuffle] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -97,13 +103,31 @@ function SeperateImage() {
 
   const showReshuffle = () => {
     return !reshuffle ? (
-      <button
-        onClick={reshuffleImage}
-        type="button"
-        className="m-2 border-gray-950 bg-blue-800 p-2 text-white hover:bg-blue-700 active:bg-blue-950 px-8"
-      >
-        Reshuffle
-      </button>
+      // <button
+      //   onClick={reshuffleImage}
+      //   type="button"
+      //   className="m-2 border-gray-950 bg-blue-800 p-2 text-white hover:bg-blue-700 active:bg-blue-950 px-8"
+      // >
+      //   Reshuffle
+      // </button>
+      // <ButtonVarient
+      //   color="primary"
+      //   // === "light" ? "light" : "dark"
+      //   theme={theme}
+      //   ariaLabel="Submit"
+      //   value="Re-Shuffle"
+      //   onclick={reshuffleImage}
+      //   className="md:w-52 mx-auto my-8 w-1/2"
+      //   //m-2 border-gray-950 bg-blue-800 p-2 text-white hover:bg-blue-700 active:bg-blue-950 px-8
+      // />
+      <IconButton sx={{ margin: "10px 0px" }} onClick={reshuffleImage}>
+        <Typography className="">
+          <IoMdRefresh
+            color={theme === "light" ? "black" : "white"}
+            size={30}
+          />
+        </Typography>
+      </IconButton>
     ) : (
       ""
     );

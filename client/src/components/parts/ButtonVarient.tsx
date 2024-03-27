@@ -88,7 +88,7 @@ export default function ButtonVarient(props: ButtonProps) {
         <button
           className={button() + " "}
           aria-label={props.ariaLabel}
-          onClick={() => props.onclick()}
+          onClick={(e) => props.onclick(e)}
         >
           {props.value}
         </button>

@@ -18,7 +18,8 @@ function SwtichTheme() {
     dispatch(setTheme({ value: currentTheme }));
   };
   useEffect(() => {
-    window.onchange = () => {
+    window.onchange = (e) => {
+      e.preventDefault();
       setInnerWidth(window.innerWidth);
     };
   }, [window.innerWidth]);
@@ -58,12 +59,12 @@ function SwtichTheme() {
         {theme === "dark" ? (
           <MdLightMode
             className="px-1 py-1 text-yellow-500 hover:text-gray-400"
-            size={innerWidth > 768 ? 40 : 40}
+            size={innerWidth > 768 ? 40 : 32}
           />
         ) : (
           <MdDarkMode
             className="px-1 py-1 text-yellow-600 hover:text-gray-400"
-            size={innerWidth > 768 ? 40 : 40}
+            size={innerWidth > 768 ? 40 : 32}
           />
         )}
       </button>

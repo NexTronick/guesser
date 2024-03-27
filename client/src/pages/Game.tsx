@@ -23,7 +23,7 @@ function Game() {
       <h1>Guess</h1>
       <div>
         <SeperateImage />
-        <FormGuessAnswer />
+        <FormGuessAnswer className="mt-5" />
       </div>
     </div>
   );

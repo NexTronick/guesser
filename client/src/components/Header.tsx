@@ -93,8 +93,8 @@ export default function Header() {
         borderColor: "transparent",
         boxShadow:
           theme === "light"
-            ? "0px 1px 1px -1px rgba(0,0,0,0.16),0px 2px 2px 0px rgba(0,0,0,0.12),0px 1px 5px 0px rgba(0,0,0,0.08) !important"
-            : "0px 1px 1px -1px rgba(255,255,255,0.16),0px 2px 2px 0px rgba(255,255,255,0.12),0px 1px 5px 0px rgba(255,255,255,0.08) !important",
+            ? "0px 1px 1px -1px rgba(0,0,0,0.16),0px 4px 4px 0px rgba(0,0,0,0.12),0px 1px 5px 0px rgba(0,0,0,0.08) !important"
+            : "0px 1px 1px -1px rgba(255,255,255,0.16),0px 4px 4px 0px rgba(255,255,255,0.14),0px 1px 5px 0px rgba(255,255,255,0.08) !important",
       }}
     >
       <Toolbar className="flex justify-center">
@@ -104,7 +104,7 @@ export default function Header() {
           // sx={{
           //   marginRight: ["20%", "40%", "450px"],
           // }}
-          className=" lg:mr-[450px] md:mr-[300px] sm:mr-[200px] xs:mr-[100px] mr-[20%]"
+          className="md:mx-0 lg:mr-[450px] md:mr-[300px] sm:mr-[200px] xs:mr-[20px] float-start mx-auto"
         >
           <IconButton
             onClick={() => {
@@ -115,7 +115,7 @@ export default function Header() {
               variant="h4"
               sx={{
                 color: theme === "light" ? "black" : "white",
-                fontSize: ["25px", "30px", "2.125rem"],
+                fontSize: ["22px", "30px", "2.125rem"],
               }}
             >
               Pic'OMystery
@@ -123,20 +123,22 @@ export default function Header() {
             </Typography>
           </IconButton>
         </div>
+        <div className="flex justify-end float-right md:mx-0 mx-auto">
+          <Typography variant="h4">
+            <SwtichTheme />
+          </Typography>
 
-        <Typography variant="h4">
-          <SwtichTheme />
-        </Typography>
+          {/* Settings icon on the right */}
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="settings"
+            onClick={handleOpen}
+          >
+            <ReactEmoji text="⚙️" className=" md:text-4xl text-3xl" />
+          </IconButton>
+        </div>
 
-        {/* Settings icon on the right */}
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="settings"
-          onClick={handleOpen}
-        >
-          <ReactEmoji text="⚙️" className=" text-4xl" />
-        </IconButton>
         <ThemeProvider theme={globalTheme}>
           <Modal
             aria-labelledby="transition-modal-title"

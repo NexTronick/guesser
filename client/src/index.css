@@ -10,9 +10,9 @@
   color: black;
   background-color: white;
 }
-input[type="text"] {
+/* input[type="text"] {
   color: black !important;
-}
+} */
 .brightTheme .FormControl.Mui-selected {
   color: black !important;
   border-color: #8d8d8d;

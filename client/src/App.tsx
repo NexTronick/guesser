@@ -34,7 +34,7 @@ function App() {
         <div className="nav">
           <NavBar />
         </div>
-        <div className="main-content mt-20 md:w-1/2 md:mx-auto w-full mx-5">
+        <div className="main-content mt-20 md:w-1/2 md:mx-auto w-full">
           <Routes>
             <Route path="/" element={<GameSettings />}></Route>
             <Route path="/play" element={<Game />}></Route>
