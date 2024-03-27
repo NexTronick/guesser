@@ -10,10 +10,10 @@ enum ColorVariant {
 type Color = keyof typeof ColorVariant;
 const customButton = tv({
   slots: {
-    base: "relative group w-24",
+    base: "relative group w-full",
     background:
       "absolute -inset-0.5 rounded-md blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 w-full",
-    button: "relative rounded-md py-2.5 px-7 transition duration-200",
+    button: "relative rounded-md py-2.5 px-7 transition duration-200 w-full",
   },
   variants: {
     /* ToDo add light theme and dark theme*/
@@ -65,6 +65,7 @@ interface ButtonProps {
   ariaLabel: string;
   value: string;
   onclick: Function;
+  className: string;
 }
 
 export default function ButtonVarient(props: ButtonProps) {
@@ -74,7 +75,7 @@ export default function ButtonVarient(props: ButtonProps) {
       : customButton({ dark: props.color });
   const { base, background, button } = theme;
   return (
-    <div>
+    <div className={props.className}>
       <div className={base()}>
         <div className={background()}></div>
 
@@ -85,7 +86,7 @@ export default function ButtonVarient(props: ButtonProps) {
         {/*         btn
         relative bg-black rounded-md py-2.5 px-7 text-gray-200 group-hover:text-white transition duration-200 */}
         <button
-          className={button()}
+          className={button() + " "}
           aria-label={props.ariaLabel}
           onClick={() => props.onclick()}
         >

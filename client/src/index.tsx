@@ -6,6 +6,7 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import store from "./app/store";
 import { CookiesProvider } from "react-cookie";
+import { BrowserRouter as Router } from "react-router-dom";
 //config of axios
 axios.defaults.baseURL = "http://localhost:5000";
 axios.defaults.headers.post["Content-Type"] =
@@ -18,7 +19,9 @@ root.render(
   <React.StrictMode>
     <CookiesProvider>
       <Provider store={store}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </Provider>
     </CookiesProvider>
   </React.StrictMode>

@@ -11,14 +11,17 @@ function SwtichTheme() {
   const [cookie, setCookie, RemoveCookie] = useCookies(["theme"]);
   const theme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
   const defaultTheme = () => {
     let currentTheme = cookie.theme == undefined ? "light" : cookie.theme;
     dispatch(setTheme({ value: currentTheme }));
   };
-  // useEffect(() => {
-  //   defaultTheme();
-  // }, []);
+  useEffect(() => {
+    window.onchange = () => {
+      setInnerWidth(window.innerWidth);
+    };
+  }, [window.innerWidth]);
 
   //   const [onHoverState, onHoverStateChange] = useState(false);
 
@@ -45,18 +48,22 @@ function SwtichTheme() {
   return (
     <div className="m-2 relative float-right pt-4">
       <button
-        className="text-white bg-black rounded-md"
+        className={`text-white border hover:border-gray-400 ${
+          theme === "dark"
+            ? "border border-yellow-500 "
+            : "border border-yellow-600 "
+        } rounded-md`}
         onClick={handleModeChange}
       >
-        {theme === "light" ? (
+        {theme === "dark" ? (
           <MdLightMode
-            className="px-2 py-2 text-yellow-400 hover:text-gray-400"
-            size={50}
+            className="px-1 py-1 text-yellow-500 hover:text-gray-400"
+            size={innerWidth > 768 ? 40 : 40}
           />
         ) : (
           <MdDarkMode
-            className="px-2 py-2 text-yellow-400 hover:text-gray-400"
-            size={50}
+            className="px-1 py-1 text-yellow-600 hover:text-gray-400"
+            size={innerWidth > 768 ? 40 : 40}
           />
         )}
       </button>

@@ -34,13 +34,11 @@ function App() {
         <div className="nav">
           <NavBar />
         </div>
-        <div className="main-content mt-20">
-          <Router>
-            <Routes>
-              <Route path="/" element={<GameSettings />}></Route>
-              <Route path="/play" element={<Game />}></Route>
-            </Routes>
-          </Router>
+        <div className="main-content mt-20 md:w-1/2 md:mx-auto w-full mx-5">
+          <Routes>
+            <Route path="/" element={<GameSettings />}></Route>
+            <Route path="/play" element={<Game />}></Route>
+          </Routes>
         </div>
       </div>
     </div>

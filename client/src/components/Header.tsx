@@ -24,6 +24,7 @@ import ReactEmoji from "react-emoji-render";
 import SwtichTheme from "./SwitchTheme";
 import { useAppSelector } from "../app/hooks";
 import { selectTheme } from "../features/theme/themeSlice";
+import { useNavigate } from "react-router-dom";
 
 const globalTheme = createTheme({
   typography: {
@@ -66,6 +67,7 @@ const globalTheme = createTheme({
 
 export default function Header() {
   //const classes = useStyles();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const theme = useAppSelector(selectTheme);
 
@@ -97,14 +99,31 @@ export default function Header() {
     >
       <Toolbar className="flex justify-center">
         {/* Logo on the left style={{ flexGrow: 1 }}      style={{ marginRight: "auto" }}*/}
-        <Typography
-          variant="h4"
-          style={{ marginRight: "450px" }}
-          sx={theme === "light" ? { color: "black" } : { color: "white" }}
+
+        <div
+          // sx={{
+          //   marginRight: ["20%", "40%", "450px"],
+          // }}
+          className=" lg:mr-[450px] md:mr-[300px] sm:mr-[200px] xs:mr-[100px] mr-[20%]"
         >
-          Pic'OMystery
-          <ReactEmoji text="🕵️‍♂️" />
-        </Typography>
+          <IconButton
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                color: theme === "light" ? "black" : "white",
+                fontSize: ["25px", "30px", "2.125rem"],
+              }}
+            >
+              Pic'OMystery
+              <ReactEmoji text="🕵️‍♂️" />
+            </Typography>
+          </IconButton>
+        </div>
+
         <Typography variant="h4">
           <SwtichTheme />
         </Typography>
@@ -116,7 +135,7 @@ export default function Header() {
           aria-label="settings"
           onClick={handleOpen}
         >
-          <ReactEmoji text="⚙️" className=" text-3xl" />
+          <ReactEmoji text="⚙️" className=" text-4xl" />
         </IconButton>
         <ThemeProvider theme={globalTheme}>
           <Modal
@@ -136,16 +155,17 @@ export default function Header() {
               <Box
                 sx={{
                   position: "absolute" as "absolute",
-                  top: "40%",
+                  top: ["50%", "50%", "40%"],
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                   bgcolor: "background.paper",
                   // border: "2px solid #000",
                   // boxShadow: 24,
-                  p: 4,
+                  p: 2,
                   //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                  maxHeight: "500px",
-                  maxWidth: "500px",
+                  maxHeight: ["80vh", "80vh", "500px"],
+                  maxWidth: ["80vw", "80vw", "500px"],
+                  width: ["80vw", "80vw", "500px"],
                   color: "black !important",
                   overflow: "auto",
                   overflowY: "auto",
@@ -164,12 +184,39 @@ export default function Header() {
                   },
                 }}
               >
-                <Typography
-                  variant="h5"
-                  style={{ marginBottom: "20px", color: "black" }}
+                <Box
+                  className="flex justify-around static"
+                  sx={{
+                    boxShadow:
+                      theme === "light"
+                        ? "0px 0px 0px 0px rgba(0,0,0,0.16),0px 2px 2px 0px rgba(0,0,0,0.12),0px 0px 0px 0px rgba(0,0,0,0.08) !important"
+                        : "0px 1px 1px -1px rgba(255,255,255,0.16),0px 2px 2px 0px rgba(255,255,255,0.12),0px 1px 5px 0px rgba(255,255,255,0.08) !important",
+                  }}
                 >
-                  Settings
-                </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      color: "black",
+                      marginRight: "75%",
+                      alignItems: "bottom",
+                    }}
+                  >
+                    Settings
+                  </Typography>
+                  <IconButton
+                    edge="end"
+                    color="inherit"
+                    aria-label="settings"
+                    onClick={handleClose}
+                    sx={{
+                      transform: "translate(-10%,0)",
+                      marginTop: "0px",
+                      paddingTop: "0px",
+                    }}
+                  >
+                    <ReactEmoji text="✖️" className=" text-xl" />
+                  </IconButton>
+                </Box>
                 {/* Theme switch */}
                 {/* <FormControlLabel
                 control={

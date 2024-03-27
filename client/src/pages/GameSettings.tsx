@@ -44,6 +44,7 @@ function GameSettings() {
         </div>
         <div className="mt-4 flex justify-center">
           <ButtonVarient
+            className="md:w-[180px] w-2/3"
             theme="light"
             color="primary"
             ariaLabel="Play"

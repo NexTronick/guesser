@@ -27,7 +27,7 @@ export default function SelectSettings(props: Props) {
     <FormControl
       sx={{ m: 1, minWidth: 120, marginTop: "15px" }}
       size="medium"
-      className="w-1/2 md:w-48 FormControl"
+      className="w-2/3 md:w-48 FormControl"
     >
       <InputLabel id="demo-select-small-label">{props.label}</InputLabel>
       <Select
