@@ -21,6 +21,7 @@ import { selectTheme } from "../features/theme/themeSlice";
 import ButtonVarient from "./parts/ButtonVarient";
 import { IoMdRefresh } from "react-icons/io";
 import { IconButton, Typography } from "@mui/material";
+import { useCookies } from "react-cookie";
 
 interface Props {
   image: string;
@@ -49,23 +50,10 @@ function SeperateImage() {
   const imageData = useAppSelector(selectImageData);
   const status = useAppSelector(selectStatus);
   const theme = useAppSelector(selectTheme);
-
   const [reshuffle, setReshuffle] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-
-  //const [imageSrc, setImageSrc] = useState<string>(animal.value.image);
-  // const [urls, setUrls] = useState<Array<string>>(imageData.images.urls);
-  // const [chosenPositions, setChosenPositions] = useState<
-  //   Array<ImagePositonType>
-  // >(imageData.images.chosenPositions);
   const { images } = useImages(imageData.images.urls);
-
-  // useEffect(() => {
-  //   setImageSrc(props.image);
-  //   setUrls(props.urls);
-  //   setChosenPositions(props.chosenPositions);
-  //   setReshuffle(false);
-  // }, [props]);
+  const [cookie, setCookie] = useCookies(["userHashKey"]);
 
   useEffect(() => {
     console.log("new animal added: called in SeperateImages");
@@ -84,6 +72,7 @@ function SeperateImage() {
       image: animal.value.image,
       reShuffled: true,
       difficulty: gameSettings.difficulty,
+      userHashKey: cookie.userHashKey,
       generatedNumbers: imageData.generatedNumbers,
       chosenPositions: imageData.images.chosenPositions,
       urls: imageData.images.urls,

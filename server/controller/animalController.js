@@ -4,6 +4,7 @@ const fs = require("fs");
 const Animality = require("animality");
 const Jimp = require("jimp");
 const sharp = require("sharp");
+const { createHash } = require("crypto");
 
 //variable const data
 const animals = [
@@ -40,170 +41,170 @@ function getRandomAnimal(min, max) {
 }
 
 //gets the random cropped buffers of animal
-async function getRandomBuffersWithImageType(
-  generatedNumbers,
-  urls,
-  imageSrc,
-  size,
-  amount,
-  ip
-) {
-  let image = await Jimp.read(imageSrc);
-  let grids = generateGrid(image.getWidth(), image.getHeight());
+// async function getRandomBuffersWithImageType(
+//   generatedNumbers,
+//   urls,
+//   imageSrc,
+//   size,
+//   amount,
+//   ip
+// ) {
+//   let image = await Jimp.read(imageSrc);
+//   let grids = generateGrid(image.getWidth(), image.getHeight());
 
-  //get random amount images
-  for (let i = 0, index = urls.length; i < amount; i++, index++) {
-    //generates random images with previous images as contrains
-    const imageInfo = await generateRandomCroppedImage(
-      generatedNumbers,
-      image,
-      size,
-      ip,
-      index
-    );
+//   //get random amount images
+//   for (let i = 0, index = urls.length; i < amount; i++, index++) {
+//     //generates random images with previous images as contrains
+//     const imageInfo = await generateRandomCroppedImage(
+//       generatedNumbers,
+//       image,
+//       size,
+//       ip,
+//       index
+//     );
 
-    //store the the new data.
-    generatedNumbers.push(imageInfo.position);
-    urls.push(imageInfo.url);
-  }
+//     //store the the new data.
+//     generatedNumbers.push(imageInfo.position);
+//     urls.push(imageInfo.url);
+//   }
 
-  const data = {
-    urls: urls,
-    type: image.getMIME(),
-    generatedNumbers: generatedNumbers,
-  };
-  return data;
-}
+//   const data = {
+//     urls: urls,
+//     type: image.getMIME(),
+//     generatedNumbers: generatedNumbers,
+//   };
+//   return data;
+// }
 //change size to height and width
 // fix
-async function generateRandomCroppedImage(
-  generatedNumbers,
-  image,
-  size,
-  ip,
-  index
-) {
-  //clone new image
-  let cloneImg = await image.clone();
-  let cloneTestImg = await image.clone();
+// async function generateRandomCroppedImage(
+//   generatedNumbers,
+//   image,
+//   size,
+//   ip,
+//   index
+// ) {
+//   //clone new image
+//   let cloneImg = await image.clone();
+//   let cloneTestImg = await image.clone();
 
-  //get random points
-  let randomPosition = generateRandomPosition(
-    generatedNumbers,
-    size,
-    0,
-    0,
-    cloneImg.bitmap.width - size,
-    cloneImg.bitmap.height - size
-  );
-  console.log(randomPosition);
+//   //get random points
+//   let randomPosition = generateRandomPosition(
+//     generatedNumbers,
+//     size,
+//     0,
+//     0,
+//     cloneImg.bitmap.width - size,
+//     cloneImg.bitmap.height - size
+//   );
+//   console.log(randomPosition);
 
-  //write the cropped image
-  const imageFileType = cloneImg.getMIME().split("/")[1];
-  try {
-    let newIp = ip.replace(/::/g, "_");
-    let storeLocation = "./storage/" + newIp;
-    if (!fs.existsSync(storeLocation)) {
-      fs.mkdirSync(storeLocation);
-      console.log("Directory created:", storeLocation);
-    }
-    await cloneImg
-      .crop(randomPosition.x, randomPosition.y, size, size)
-      .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
-    await cloneTestImg
-      .crop(0, 0, size, size)
-      .writeAsync(`${storeLocation}/position00.${imageFileType}`);
-    //get buffer from cropImage new image
-    let url = `http://localhost:5000/api/animal/storage/${newIp}/${index}.${imageFileType}`;
-    return { position: randomPosition, url: url };
-  } catch (e) {
-    console.log(e);
-    throw new Error(e);
-  }
-}
+//   //write the cropped image
+//   const imageFileType = cloneImg.getMIME().split("/")[1];
+//   try {
+//     let newIp = ip.replace(/::/g, "_");
+//     let storeLocation = "./storage/" + newIp;
+//     if (!fs.existsSync(storeLocation)) {
+//       fs.mkdirSync(storeLocation);
+//       console.log("Directory created:", storeLocation);
+//     }
+//     await cloneImg
+//       .crop(randomPosition.x, randomPosition.y, size, size)
+//       .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
+//     await cloneTestImg
+//       .crop(0, 0, size, size)
+//       .writeAsync(`${storeLocation}/position00.${imageFileType}`);
+//     //get buffer from cropImage new image
+//     let url = `http://localhost:5000/api/animal/storage/${newIp}/${index}.${imageFileType}`;
+//     return { position: randomPosition, url: url };
+//   } catch (e) {
+//     console.log(e);
+//     throw new Error(e);
+//   }
+// }
 
 //TODO: size changed to width and height
 //TODO: adding constraints for grid random selectors.
 //5 by 5 grid then choose between those 25 positions of x and y.
-function generateRandomPosition(
-  generatedNumbers,
-  size,
-  minX,
-  minY,
-  maxX,
-  maxY
-) {
-  var randomNumberX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-  var randomNumberY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+// function generateRandomPosition(
+//   generatedNumbers,
+//   size,
+//   minX,
+//   minY,
+//   maxX,
+//   maxY
+// ) {
+//   var randomNumberX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+//   var randomNumberY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
 
-  let position = { x: randomNumberX, y: randomNumberY };
+//   let position = { x: randomNumberX, y: randomNumberY };
 
-  //Check if generated number already exists
-  //TODO: change size to width and height
-  //TODO: FIX THIS IMPORTANT TO GENERATE THIS!
-  const index = generatedNumbers.findIndex((num) =>
-    // (num.x === position.x && num.y === position.y) ||
-    // (num.x + size > position.x &&
-    //   num.x < position.x &&
-    //   num.y + size > position.y &&
-    //   num.y < position.y) ||
-    // (position.x + size > num.x &&
-    //   position.x > num.x &&
-    //   position.y + size > num.y &&
-    //   position.y < num.y) ||
-    // (position.x + size < num.x + size && position.x + size > num.x) ||
-    positionValidation(num, position, size)
-  );
-  console.log("index: " + index);
-  //if it exists then do recursive behaviour
-  if (index !== -1) {
-    console.log("index: " + index);
-    generatedNumbers.splice(index, 1);
-    return generateRandomPosition(
-      generatedNumbers,
-      size,
-      minX,
-      minY,
-      maxX,
-      maxY
-    );
-  }
+//   //Check if generated number already exists
+//   //TODO: change size to width and height
+//   //TODO: FIX THIS IMPORTANT TO GENERATE THIS!
+//   const index = generatedNumbers.findIndex((num) =>
+//     // (num.x === position.x && num.y === position.y) ||
+//     // (num.x + size > position.x &&
+//     //   num.x < position.x &&
+//     //   num.y + size > position.y &&
+//     //   num.y < position.y) ||
+//     // (position.x + size > num.x &&
+//     //   position.x > num.x &&
+//     //   position.y + size > num.y &&
+//     //   position.y < num.y) ||
+//     // (position.x + size < num.x + size && position.x + size > num.x) ||
+//     positionValidation(num, position, size)
+//   );
+//   console.log("index: " + index);
+//   //if it exists then do recursive behaviour
+//   if (index !== -1) {
+//     console.log("index: " + index);
+//     generatedNumbers.splice(index, 1);
+//     return generateRandomPosition(
+//       generatedNumbers,
+//       size,
+//       minX,
+//       minY,
+//       maxX,
+//       maxY
+//     );
+//   }
 
-  return position; //returns position (when found a proper size)
-}
+//   return position; //returns position (when found a proper size)
+// }
 
 //position validation
-function positionValidation(previous, current, size) {
-  if (previous.x === current.x && previous.y === current.y) {
-    return true;
-  } else if (
-    current.x > previous.x &&
-    current.x < previous.x + size &&
-    previous.y === current.y
-  ) {
-    return true;
-  } else if (
-    current.y < previous.y + size &&
-    current.y > previous.y &&
-    previous.x === current.x
-  ) {
-    return true;
-  } else if (
-    !(current.x - previous.x > 100 || current.x - previous.x < -100) ||
-    !(current.y - previous.y > 100 || current.y - previous.y < -100) ||
-    !(
-      current.x - previous.x > 100 ||
-      current.x - previous.x < -100 ||
-      current.y - previous.y > 100 ||
-      current.y - previous.y < -100
-    )
-  ) {
-    return true;
-  }
+// function positionValidation(previous, current, size) {
+//   if (previous.x === current.x && previous.y === current.y) {
+//     return true;
+//   } else if (
+//     current.x > previous.x &&
+//     current.x < previous.x + size &&
+//     previous.y === current.y
+//   ) {
+//     return true;
+//   } else if (
+//     current.y < previous.y + size &&
+//     current.y > previous.y &&
+//     previous.x === current.x
+//   ) {
+//     return true;
+//   } else if (
+//     !(current.x - previous.x > 100 || current.x - previous.x < -100) ||
+//     !(current.y - previous.y > 100 || current.y - previous.y < -100) ||
+//     !(
+//       current.x - previous.x > 100 ||
+//       current.x - previous.x < -100 ||
+//       current.y - previous.y > 100 ||
+//       current.y - previous.y < -100
+//     )
+//   ) {
+//     return true;
+//   }
 
-  //if(previous.x + size > current.x && current.x > previous.x && previous.y +size > current.y && previous.y < current.y)
-  //if(previous.x +size )
-}
+//   //if(previous.x + size > current.x && current.x > previous.x && previous.y +size > current.y && previous.y < current.y)
+//   //if(previous.x +size )
+// }
 
 //updated function for get random animal image
 async function getRandomAnimalImage(
@@ -214,7 +215,7 @@ async function getRandomAnimalImage(
   urls,
   imageSrc,
   amount,
-  ip
+  userHashKey
 ) {
   let image = await Jimp.read(imageSrc);
   let newPositions = chooseRandomNewPositions(
@@ -229,7 +230,7 @@ async function getRandomAnimalImage(
       newPositions[urlIndex],
       xSize,
       ySize,
-      ip,
+      userHashKey,
       urlIndex
     );
     urls.push(clone.url);
@@ -246,7 +247,7 @@ async function createCloneImage(
   randomPosition,
   xSize,
   ySize,
-  ip,
+  userHashKey,
   index
 ) {
   //clone new image
@@ -255,8 +256,7 @@ async function createCloneImage(
   //write the cropped image
   const imageFileType = cloneImg.getMIME().split("/")[1];
   try {
-    let newIp = ip.replace(/::/g, "_");
-    let storeLocation = "./storage/" + newIp;
+    let storeLocation = "./storage/" + userHashKey;
     if (!fs.existsSync(storeLocation)) {
       fs.mkdirSync(storeLocation);
       console.log("Directory created:", storeLocation);
@@ -274,7 +274,7 @@ async function createCloneImage(
       .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
 
     //get buffer from cropImage new image
-    let url = `http://localhost:5000/api/animal/storage/${newIp}/${index}.${imageFileType}`;
+    let url = `http://localhost:5000/api/animal/storage/${userHashKey}/${index}.${imageFileType}`;
     return { url: url };
   } catch (e) {
     console.log(e);
@@ -332,7 +332,13 @@ module.exports = {
       res.end();
       return;
     }
-    res.status(200).send({ animalData: result });
+    let current_date = new Date().valueOf().toString();
+    let random = Math.random().toString();
+    let userHashKey = createHash("sha256")
+      .update(current_date + random)
+      .digest("hex");
+
+    res.status(200).send({ animalData: result, userHashKey: userHashKey });
     res.end();
   },
   handleRandomCroppedImage: async function (req, res) {
@@ -346,6 +352,7 @@ module.exports = {
       ? req.body.chosenPositions
       : [];
     const difficulty = req.body.difficulty;
+    const userHashKey = req.body.userHashKey;
 
     // console.log("image", image);
     // console.log("reShuffled", reShuffled);
@@ -390,7 +397,7 @@ module.exports = {
           urls,
           newBuffer,
           amount,
-          req.ip
+          userHashKey
         );
         console.log("images:", images);
         //use the new buffer to get the images
@@ -417,11 +424,11 @@ module.exports = {
     }
   },
   handleStorage: async function (req, res) {
-    const { ip, fileName } = req.params;
+    const { userHashKey, fileName } = req.params;
     //this will make the storage full , maybe need to find better solution here...
     //another solution is to use mongodb to store json data or more like objects with the array type
-    let newIp = ip.replace(/::/g, "_");
-    let read = fs.readFileSync("./storage/" + newIp + "/" + fileName);
+    // let newIp = ip.replace(/::/g, "_");
+    let read = fs.readFileSync("./storage/" + userHashKey + "/" + fileName);
     console.log(read);
     res.send(read);
     res.end();

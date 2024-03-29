@@ -7,6 +7,8 @@ import { setImageData } from "../imageData/imageDataSlice";
 import type { AnimalType, ImageDataType } from "../../AllTypes";
 import axios from "axios";
 import { setStatus, Status } from "../dataStatus/dataStatusSlice";
+import { setGuess } from "../guess/guessSlice";
+import { setCookie, getCookie } from "../../util/CookieUtil";
 // Define a type for the slice state
 export interface GameSettingsType {
   difficulty: { text: string; value: number };
@@ -50,6 +52,7 @@ export const loadAnimalWithGameSettingsThunk =
       }
       dispatch(setGameSettings(gameSettings));
       dispatch(setStatus(Status.Loading));
+      dispatch(setGuess(""));
 
       const data = await loadGameSettings(gameSettings);
 
@@ -75,11 +78,16 @@ async function loadGameSettings(gameSettings: GameSettingsType) {
   }
   console.log(randomAnimal.data.animalData);
   let animal: AnimalType = randomAnimal.data.animalData;
+
+  let userHashKey: string = randomAnimal.data.userHashKey;
+  userHashKey = handleCookieChange("userHashKey", userHashKey);
+
   //to do : add the game settings details in backend such as difficulty.
   let randomImage = await axios.post("/api/animal/random/img", {
     image: animal.image,
     reShuffled: false,
     difficulty: gameSettings.difficulty,
+    userHashKey: userHashKey,
   });
 
   //checks for status result
@@ -94,4 +102,14 @@ async function loadGameSettings(gameSettings: GameSettingsType) {
   };
 }
 
+function handleCookieChange(name: string, value: string) {
+  let oldCookie = getCookie(name);
+  if (oldCookie !== "") {
+    return oldCookie;
+  }
+  let addDate = new Date(Date.now());
+  addDate.setFullYear(addDate.getFullYear() + 1);
+  setCookie("userHashKey", value, addDate);
+  return value;
+}
 export default gameSettingsSlice.reducer;

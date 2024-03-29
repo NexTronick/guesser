@@ -8,6 +8,9 @@ import {
 } from "../features/gameSettings/gameSettingsSlice";
 import { selectTheme } from "../features/theme/themeSlice";
 import ButtonVarient from "./parts/ButtonVarient";
+import { firstLetterUppercase } from "../util/Funtionalitise";
+import { setGuess, selectGuess } from "../features/guess/guessSlice";
+
 interface Props {
   className: string;
 }
@@ -19,6 +22,8 @@ function FormGuessAnswer(props: Props) {
   const dispatch = useAppDispatch();
   const inputRef = useRef();
   const [span, setSpan] = useState(<span></span>);
+  const [guessTimes, setGuessTimes] = useState(0);
+  const guess = useAppSelector(selectGuess);
 
   const submitHandler = (event: any) => {
     event.preventDefault();
@@ -30,11 +35,17 @@ function FormGuessAnswer(props: Props) {
       setSpan(
         <>
           <br />
-          <span className=" text-green-500">Yay! you got it right!</span>
+          <span className=" text-green-500">
+            Yay! you got it right! <br />
+            {`${firstLetterUppercase(animal.value.animal)} Fact: ${
+              animal.value.fact
+            }`}
+          </span>
         </>
       );
       dispatch(loadAnimalWithGameSettingsThunk(gameSettings));
     } else {
+      setGuessTimes(guessTimes + 1);
       setSpan(
         <>
           <br />
@@ -44,20 +55,18 @@ function FormGuessAnswer(props: Props) {
         </>
       );
     }
+    if (guessTimes >= 2) {
+      dispatch(setGuess(check));
+    }
   };
 
   const submit = (e: React.FormEvent<HTMLInputElement>) => {};
 
   useEffect(() => {
-    // let guessForm = document.getElementById("guess");
-    // guessForm?.addEventListener("keydown", (event: KeyboardEvent) => {
-    //   event.preventDefault();
-    //   if (event.key !== "Enter") {
-    //     return;
-    //   }
-    //   su bmit(event);
-    // });
-  }, []);
+    dispatch(setGuess(""));
+    setAnswer("");
+    setGuessTimes(0);
+  }, [animal, dispatch]);
 
   return (
     <div className={props.className}>

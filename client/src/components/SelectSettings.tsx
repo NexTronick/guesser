@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function SelectSettings(props: Props) {
-  const [item, setItem] = React.useState(0);
+  const [item, setItem] = useState(0);
   const theme = useAppSelector((state) => state.theme.value);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -22,6 +22,10 @@ export default function SelectSettings(props: Props) {
     console.log("selected: " + event.target.value);
     props.onChange(props.options[index]);
   };
+
+  useEffect(() => {
+    props.onChange(props.options[0]);
+  }, []);
 
   return (
     <FormControl

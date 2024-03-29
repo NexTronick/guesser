@@ -5,13 +5,15 @@ import {
   selectGameSettings,
   loadAnimalWithGameSettingsThunk,
 } from "../features/gameSettings/gameSettingsSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppSelector } from "../app/hooks";
 import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
+import Hint from "../components/Hint";
+import { selectGuess } from "../features/guess/guessSlice";
+
 function Game() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const gameSettings = useAppSelector(selectGameSettings);
+  const guess = useAppSelector(selectGuess);
   useEffect(() => {
     console.log("Game Loaded!");
     if (gameSettings.difficulty.value === 0) {
@@ -20,7 +22,7 @@ function Game() {
   }, []);
   return (
     <div className="">
-      <h1>Guess</h1>
+      {guess !== "" ? <Hint /> : ""}
       <div>
         <SeperateImage />
         <FormGuessAnswer className="mt-5" />

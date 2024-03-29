@@ -14,5 +14,5 @@ router.get("/random", handleRandom);
 
 router.post("/random/img", handleRandomCroppedImage);
 
-router.get("/storage/:ip/:fileName", handleStorage);
+router.get("/storage/:userHashKey/:fileName", handleStorage);
 module.exports = router;
