@@ -10,6 +10,7 @@ import { selectTheme } from "../features/theme/themeSlice";
 import ButtonVarient from "./parts/ButtonVarient";
 import { firstLetterUppercase } from "../util/Funtionalitise";
 import { setGuess, selectGuess } from "../features/guess/guessSlice";
+import { createStreakThunk } from "../features/streak/streakSlice";
 
 interface Props {
   className: string;
@@ -43,6 +44,7 @@ function FormGuessAnswer(props: Props) {
           </span>
         </>
       );
+      dispatch(createStreakThunk(guessTimes));
       dispatch(loadAnimalWithGameSettingsThunk(gameSettings));
     } else {
       setGuessTimes(guessTimes + 1);

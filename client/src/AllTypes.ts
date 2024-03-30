@@ -31,3 +31,8 @@ export interface ImagePositonType {
 export interface ThemeType {
   value: "light" | "dark";
 }
+
+export interface StreakType {
+  value: number;
+  createdAtInTicks: number;
+}

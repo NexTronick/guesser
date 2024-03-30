@@ -25,6 +25,8 @@ import SwtichTheme from "./SwitchTheme";
 import { useAppSelector } from "../app/hooks";
 import { selectTheme } from "../features/theme/themeSlice";
 import { useNavigate } from "react-router-dom";
+import { FaFire } from "react-icons/fa";
+import { selectStreak } from "../features/streak/streakSlice";
 
 const globalTheme = createTheme({
   typography: {
@@ -37,39 +39,12 @@ const globalTheme = createTheme({
   },
 });
 
-// const useStyles: Theme = makeStyles((theme: Theme) => ({
-//   modalContent: {
-//     backgroundColor: "#fff",
-//     margin: "10% auto",
-//     padding: "20px",
-//     outline: "none",
-//     borderRadius: "8px",
-//     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-//     maxHeight: "450px",
-//     maxWidth: "450px",
-//     color: "black !important",
-//     overflowY: "auto",
-//     "&::-webkit-scrollbar": {
-//       width: "8px",
-//     },
-//     "&::-webkit-scrollbar-track": {
-//       backgroundColor: "#f0f0f0",
-//     },
-//     "&::-webkit-scrollbar-thumb": {
-//       backgroundColor: "#888",
-//       borderRadius: "4px",
-//     },
-//     "&::-webkit-scrollbar-thumb:hover": {
-//       backgroundColor: "#555",
-//     },
-//   },
-// }));
-
 export default function Header() {
   //const classes = useStyles();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const theme = useAppSelector(selectTheme);
+  const streak = useAppSelector(selectStreak);
 
   const handleOpen = () => {
     setOpen(true);
@@ -78,12 +53,6 @@ export default function Header() {
   const handleClose = () => {
     setOpen(false);
   };
-
-  //   const handleThemeChange = () => {
-  //     const newTheme = theme === "light" ? "dark" : "light";
-  //     setTheme(newTheme);
-  //     // You can implement the theme switch logic here
-  //   };
 
   return (
     <AppBar
@@ -115,7 +84,7 @@ export default function Header() {
               variant="h4"
               sx={{
                 color: theme === "light" ? "black" : "white",
-                fontSize: ["22px", "30px", "2.125rem"],
+                fontSize: ["23px", "30px", "2.125rem"],
               }}
             >
               Pic'OMystery
@@ -137,6 +106,16 @@ export default function Header() {
           >
             <ReactEmoji text="⚙️" className=" md:text-4xl text-3xl" />
           </IconButton>
+          <Typography
+            className=" mt-8 ml-5"
+            sx={{ marginTop: "25px", marginLeft: "15px" }}
+          >
+            <FaFire
+              className=" text-orange-500"
+              size={window.innerWidth > 760 ? 30 : 25}
+            />
+            <span className=" text-orange-500">{streak.value}</span>
+          </Typography>
         </div>
 
         <ThemeProvider theme={globalTheme}>
@@ -166,8 +145,8 @@ export default function Header() {
                   p: 2,
                   //   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                   maxHeight: ["80vh", "80vh", "500px"],
-                  maxWidth: ["80vw", "80vw", "500px"],
-                  width: ["80vw", "80vw", "500px"],
+                  maxWidth: ["85vw", "85vw", "500px"],
+                  width: ["90vw", "85vw", "500px"],
                   color: "black !important",
                   overflow: "auto",
                   overflowY: "auto",
@@ -186,20 +165,12 @@ export default function Header() {
                   },
                 }}
               >
-                <Box
-                  className="flex justify-around static"
-                  sx={{
-                    boxShadow:
-                      theme === "light"
-                        ? "0px 0px 0px 0px rgba(0,0,0,0.16),0px 2px 2px 0px rgba(0,0,0,0.12),0px 0px 0px 0px rgba(0,0,0,0.08) !important"
-                        : "0px 1px 1px -1px rgba(255,255,255,0.16),0px 2px 2px 0px rgba(255,255,255,0.12),0px 1px 5px 0px rgba(255,255,255,0.08) !important",
-                  }}
-                >
+                <Box className="flex justify-around static w-full mx-0 px-2 md:px-5 border-t-none border-r-none border-l-none border-b-2 mb-4">
                   <Typography
                     variant="h5"
                     sx={{
                       color: "black",
-                      marginRight: "75%",
+                      marginRight: ["60%", "80%", "75%"],
                       alignItems: "bottom",
                     }}
                   >
@@ -238,7 +209,8 @@ export default function Header() {
                   This game is pretty simple. Before you get started, you must
                   set your difficulty level and Guess?. Then you click Play. To
                   get started... You will be given 3 cropped picture. You can
-                  then start the guessing! Enjoy and have fun!
+                  then start the guessing! Hint is provided after 3 guesses.
+                  Streak ends after 5 guesses. Enjoy and have fun!
                 </Typography>
                 <br />
                 <Typography className="text-black">

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, UnknownAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "redux-thunk";
 import type { RootState } from "../../app/store";
-import { useAppDispatch } from "../../app/hooks";
 import { setAnimal, Animal } from "../animal/animalSlice";
 import { setImageData } from "../imageData/imageDataSlice";
 import type { AnimalType, ImageDataType } from "../../AllTypes";
@@ -63,8 +62,6 @@ export const loadAnimalWithGameSettingsThunk =
       dispatch(setAnimal(data.animal));
       dispatch(setImageData(data.imageData));
       dispatch(setStatus(Status.Loaded));
-      // const newDispatch = useAppDispatch();
-      // newDispatch();
     } catch (error) {
       console.log("Failed load Animal With Game Settings Thunk", error);
       // dispatch(setGameSettingsFailure());
@@ -107,9 +104,9 @@ function handleCookieChange(name: string, value: string) {
   if (oldCookie !== "") {
     return oldCookie;
   }
-  let addDate = new Date(Date.now());
-  addDate.setFullYear(addDate.getFullYear() + 1);
-  setCookie("userHashKey", value, addDate);
+  let expiryDate = new Date(Date.now());
+  expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+  setCookie("userHashKey", value, expiryDate);
   return value;
 }
 export default gameSettingsSlice.reducer;

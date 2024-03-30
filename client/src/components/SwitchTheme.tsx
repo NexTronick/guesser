@@ -23,6 +23,10 @@ function SwtichTheme() {
       setInnerWidth(window.innerWidth);
     };
   }, [window.innerWidth]);
+  document.onchange = (e) => {
+    e.preventDefault();
+    setInnerWidth(window.innerWidth);
+  };
 
   //   const [onHoverState, onHoverStateChange] = useState(false);
 

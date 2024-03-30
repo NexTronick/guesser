@@ -332,6 +332,7 @@ module.exports = {
       res.end();
       return;
     }
+    result.animal = result.animal === "redpanda" ? "red panda" : result.animal; //changing redpanda to red panda
     let current_date = new Date().valueOf().toString();
     let random = Math.random().toString();
     let userHashKey = createHash("sha256")

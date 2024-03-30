@@ -7,6 +7,8 @@ import gameSettingsReducer from "../features/gameSettings/gameSettingsSlice";
 import imageDataSlice from "../features/imageData/imageDataSlice";
 import dataStatusReducer from "../features/dataStatus/dataStatusSlice";
 import guessReducer from "../features/guess/guessSlice";
+import streakReducer from "../features/streak/streakSlice";
+
 const store = configureStore({
   reducer: {
     counter: counterReducer,
@@ -17,6 +19,7 @@ const store = configureStore({
     imageData: imageDataSlice,
     dataStatus: dataStatusReducer,
     guess: guessReducer,
+    streak: streakReducer,
   },
 });
 
