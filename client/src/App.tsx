@@ -11,7 +11,7 @@ import {
   loadCookieStreakThunk,
   selectStreak,
 } from "./features/streak/streakSlice";
-
+import Footer from "./components/Footer";
 function App() {
   const [cookie, setCookie] = useCookies();
   const dispatch = useAppDispatch();
@@ -45,7 +45,9 @@ function App() {
             <Route path="/play" element={<Game />}></Route>
           </Routes>
         </div>
-        <div className="footer">{/* footer to be added here */}</div>
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
     </div>
   );
