@@ -10,8 +10,9 @@
     "clientInstall": "cd client && npm install",
     "serverInstall": "cd server && npm install",
     "install": "concurrently \"npm run clientInstall\" \"npm run serverInstall\"",
-    "start": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" -p \"[{name}]\" \"npm run server\" \"npm run client\"",
-    "build": "NODE_ENV=production && cd client && npm i && npm run build"
+    "start_dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" -p \"[{name}]\" \"npm run server\" \"npm run client\"",
+    "build": "concurrently -n \"FRONTEND,BACKEND\" -c \"green,blue\" -p \"[{name}]\" \"SET NODE_ENV=production && cd client && npm i && npm run build\" \"cd server && npm i\"",
+    "start": "cd server && npm run start"
   },
   "author": "Natraj Padwani",
   "license": "ISC",
