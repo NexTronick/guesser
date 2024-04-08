@@ -4,7 +4,7 @@
 /server/node_modules
 
 #include the folder but ignore the
-/server/storage/**/*.png
+#/server/storage/**/*.png
 
 #client folder
 
