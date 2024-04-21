@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const animalAPI = require("./routes/animal");
 const path = require("path");
-const port = 5000;
+const port = process.env.PORT || 5000;
 const _dirname = path.dirname("");
 //const buildpath = path.join(_dirname, "../client/build");
 
