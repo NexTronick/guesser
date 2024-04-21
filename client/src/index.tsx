@@ -8,7 +8,7 @@ import store from "./app/store";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router } from "react-router-dom";
 //config of axios
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = process.env.REACT_ENV_BACKEND_URL;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
