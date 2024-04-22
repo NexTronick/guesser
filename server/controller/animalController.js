@@ -5,6 +5,7 @@ const Animality = require("animality");
 const Jimp = require("jimp");
 const sharp = require("sharp");
 const { createHash } = require("crypto");
+const path = require("path");
 
 //variable const data
 const animals = [
@@ -157,6 +158,29 @@ function generateGrid(width, height) {
   return { width, height };
 }
 
+function autoDelete(userid) {
+  //every 1h it will delete the images
+  setTimeout(deleteInside(userid), 1000 * 60 * 60);
+
+  //every 1 month it will delete the userid whole folder
+}
+
+function deleteInside(userid) {
+  const directory = path.join("../storage/", userid);
+  if (!fs.existsSync()) {
+    return;
+  }
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), (err) => {
+        if (err) throw err;
+      });
+    }
+  });
+}
+
 module.exports = {
   handleRandom: async function (req, res) {
     let randomAnimal = getRandomAnimal(0, animals.length - 1);
@@ -172,6 +196,11 @@ module.exports = {
     let userHashKey = createHash("sha256")
       .update(current_date + random)
       .digest("hex");
+    try {
+      autoDelete(userHashKey);
+    } catch (e) {
+      console.log(e);
+    }
 
     res.status(200).send({ animalData: result, userHashKey: userHashKey });
     res.end();

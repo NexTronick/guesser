@@ -10,17 +10,23 @@ const _dirname = path.dirname("");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/api/animal", animalAPI);
-// app.use(express.static(buildpath));
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://guesser.natrajpadwani.site, https://guesser-natrajpadwani.netlify.app"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
-// app.get("/*", function (req, res) {
-//   res.sendFile(
-//     path.join(__dirname, "../client/build/index.html"),
-//     function (err) {
-//       if (err) res.status(500).send(err);
-//     }
-//   );
-// });
+app.get("/", (req, res) => {
+  res.send("This is an api server. Status 200.");
+  res.end();
+});
+
+app.use("/api/animal", animalAPI);
+
 app.listen(port, () => {
   console.log("Listening on port " + port);
   console.log("view link url: http://localhost:" + port);

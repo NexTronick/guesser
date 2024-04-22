@@ -2,6 +2,8 @@
 
 #server folder
 /server/node_modules
+/server/dist
+/server/*/dist
 
 #include the folder but ignore the
 #/server/storage/**/*.png
