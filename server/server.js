@@ -13,7 +13,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://guesser.natrajpadwani.site, https://guesser-natrajpadwani.netlify.app"
+    "https://guesser-natrajpadwani.netlify.app"
   );
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
