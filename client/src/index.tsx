@@ -8,7 +8,8 @@ import store from "./app/store";
 import { CookiesProvider } from "react-cookie";
 import { BrowserRouter as Router } from "react-router-dom";
 //config of axios
-axios.defaults.baseURL = process.env.REACT_ENV_BACKEND_URL;
+axios.defaults.baseURL =
+  process.env.REACT_ENV_BACKEND_URL || "https://guessapi.natrajpadwani.site";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
