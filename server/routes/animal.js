@@ -8,8 +8,6 @@ const {
   handleStorage,
 } = require("../controller/animalController");
 
-router.use(cors());
-
 router.get("/random", handleRandom);
 
 router.post("/random/img", handleRandomCroppedImage);
