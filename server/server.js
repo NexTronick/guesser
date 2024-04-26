@@ -15,8 +15,14 @@ app.use(
     origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
+    optionSuccessStatus: 200,
   })
 );
+
+//run on client build folder
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path(__dirname, "../client/build")));
+// }
 
 // app.use((req, res, next) => {
 //   res.setHeader(

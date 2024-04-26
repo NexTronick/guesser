@@ -10,12 +10,14 @@ var store_1 = require("./app/store");
 var react_cookie_1 = require("react-cookie");
 var react_router_dom_1 = require("react-router-dom");
 //config of axios
+axios_1["default"].defaults.headers.get["Access-Control-Allow-Origin"] = "*";
+axios_1["default"].defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 axios_1["default"].defaults.baseURL =
     process.env.REACT_ENV_BACKEND_URL || "https://guessapi.natrajpadwani.site";
 axios_1["default"].defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-axios_1["default"].defaults.headers.get["Access-Control-Allow-Origin"] = "*";
-axios_1["default"].defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+axios_1["default"].defaults.
+;
 var root = client_1["default"].createRoot(document.getElementById("root"));
 root.render(react_1["default"].createElement(react_1["default"].StrictMode, null,
     react_1["default"].createElement(react_cookie_1.CookiesProvider, null,
