@@ -176,7 +176,9 @@ function deleteInside(userid) {
 
 function autoDelete(userid) {
   //every 1h it will delete the images
-  setTimeout(deleteInside(userid), 1000 * 60 * 60);
+  setTimeout(() => {
+    deleteInside(userid);
+  }, 1000 * 60 * 60);
 
   //every 1 month it will delete the userid whole folder
 }
