@@ -34,10 +34,10 @@ app.use(
 //   next();
 // });
 
-app.get("/", (req, res) => {
-  res.send("This is an api server. Status 200.");
-  res.end();
-});
+// app.get("/", (req, res) => {
+//   res.send("This is an api server. Status 200.");
+//   res.end();
+// });
 
 app.use("/api/animal", animalAPI);
 

@@ -158,13 +158,6 @@ function generateGrid(width, height) {
   return { width, height };
 }
 
-function autoDelete(userid) {
-  //every 1h it will delete the images
-  setTimeout(deleteInside(userid), 1000 * 60 * 60);
-
-  //every 1 month it will delete the userid whole folder
-}
-
 function deleteInside(userid) {
   const directory = path.join("../storage/", userid);
   if (!fs.existsSync()) {
@@ -181,6 +174,12 @@ function deleteInside(userid) {
   });
 }
 
+function autoDelete(userid) {
+  //every 1h it will delete the images
+  setTimeout(deleteInside(userid), 1000 * 60 * 60);
+
+  //every 1 month it will delete the userid whole folder
+}
 module.exports = {
   handleRandom: async function (req, res) {
     let randomAnimal = getRandomAnimal(0, animals.length - 1);
