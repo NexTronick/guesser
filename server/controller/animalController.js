@@ -160,7 +160,7 @@ function generateGrid(width, height) {
 
 function deleteInside(userid) {
   const directory = path.join("../storage/", userid);
-  if (!fs.existsSync()) {
+  if (!fs.existsSync(directory)) {
     return;
   }
   fs.readdir(directory, (err, files) => {
