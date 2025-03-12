@@ -4,7 +4,7 @@ const app = express();
 const animalAPI = require("./routes/animal");
 const path = require("path");
 const cors = require("cors");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 const _dirname = path.dirname("");
 //const buildpath = path.join(_dirname, "../client/build");
 
