@@ -19,6 +19,15 @@ app.use(
     optionSuccessStatus: 200,
   })
 );
+//dev mode
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     optionSuccessStatus: 200,
+//   })
+// );
 
 //run on client build folder
 // if (process.env.NODE_ENV === "production") {

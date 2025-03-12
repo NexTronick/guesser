@@ -10,8 +10,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 //config of axios
 axios.defaults.headers.get["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+
+//axios.defaults.baseURL = "http://localhost:5001";
 axios.defaults.baseURL =
   process.env.REACT_ENV_BACKEND_URL || "https://guessapi.natrajpadwani.com";
+
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 axios.defaults.withCredentials = true;

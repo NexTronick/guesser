@@ -190,10 +190,25 @@ function autoDelete(userid) {
   //every 1 month it will delete the userid whole folder
 }
 
+// Function to sanitize the userHashKey (no dots allowed)
+function sanitizeUserHashKey(userHashKey) {
+  return userHashKey.replace(/[^a-zA-Z0-9_-]/g, ""); // Allow alphanumeric, underscore, and dash
+}
+
+// Function to sanitize the fileName (allow one dot)
+function sanitizeFileName(fileName) {
+  // Allow alphanumeric, underscore, dash, and one dot
+  const dotCount = (fileName.match(/\./g) || []).length;
+  if (dotCount > 1) {
+    throw new Error("File name can only contain one dot.");
+  }
+  return fileName.replace(/[^a-zA-Z0-9._-]/g, ""); // Allow alphanumeric, dot, underscore, and dash
+}
+
 function getStoragePath(userHashKey, fileName) {
   const baseDirectory = path.join(__dirname, "..", "storage");
-  const sanitizedUserHashKey = sanitizePath(userHashKey);
-  const sanitizedFileName = sanitizePath(fileName);
+  const sanitizedUserHashKey = sanitizeUserHashKey(userHashKey);
+  const sanitizedFileName = sanitizeFileName(fileName);
   const fullPath = path.join(
     baseDirectory,
     sanitizedUserHashKey,
@@ -208,8 +223,9 @@ function getStoragePath(userHashKey, fileName) {
 }
 
 function validateInput(input) {
-  const regex = /^[a-zA-Z0-9_-]+$/; // Adjust as necessary
-  if (!regex.test(input)) {
+  const regex = /[^a-zA-Z0-9.]/; // Adjust as necessary
+  const dotCount = (input.match(/\./g) || []).length;
+  if (regex.test(input) || dotCount > 1) {
     throw new Error("Invalid input");
   }
 }
