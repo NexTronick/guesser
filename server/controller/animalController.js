@@ -6,6 +6,7 @@ const Jimp = require("jimp");
 const sharp = require("sharp");
 const { createHash } = require("crypto");
 const path = require("path");
+require("dotenv").config();
 
 //variable const data
 const animals = [
@@ -109,7 +110,7 @@ async function createCloneImage(
       .writeAsync(`${storeLocation}/${index}.${imageFileType}`);
 
     //get buffer from cropImage new image
-    let url = `http://localhost:5000/api/animal/storage/${userHashKey}/${index}.${imageFileType}`;
+    let url = `${process.env.BACKEND_URL}/api/animal/storage/${userHashKey}/${index}.${imageFileType}`;
     return { url: url };
   } catch (e) {
     console.log(e);
