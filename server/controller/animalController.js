@@ -79,7 +79,7 @@ async function getRandomAnimalImage(
 
 //create storage Directory based on user for storing images
 function createStorageDirectory(userHashKey) {
-  const storeLocation = path.join(__dirname, "storage", userHashKey);
+  const storeLocation = path.join(__dirname, "..", "storage", userHashKey);
   if (!fs.existsSync(storeLocation)) {
     fs.mkdirSync(storeLocation);
     console.log("Directory created:", storeLocation);
@@ -191,7 +191,7 @@ function autoDelete(userid) {
 }
 
 function getStoragePath(userHashKey, fileName) {
-  const baseDirectory = path.join(__dirname, "storage");
+  const baseDirectory = path.join(__dirname, "..", "storage");
   const sanitizedUserHashKey = sanitizePath(userHashKey);
   const sanitizedFileName = sanitizePath(fileName);
   const fullPath = path.join(
