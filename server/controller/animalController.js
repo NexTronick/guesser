@@ -77,6 +77,16 @@ async function getRandomAnimalImage(
   };
 }
 
+//create storage Directory based on user for storing images
+function createStorageDirectory(userHashKey) {
+  const storeLocation = path.join(__dirname, "storage", userHashKey);
+  if (!fs.existsSync(storeLocation)) {
+    fs.mkdirSync(storeLocation);
+    console.log("Directory created:", storeLocation);
+  }
+  return storeLocation;
+}
+
 //helper method
 async function createCloneImage(
   image,
@@ -88,15 +98,11 @@ async function createCloneImage(
 ) {
   //clone new image
   let cloneImg = await image.clone();
-
   //write the cropped image
   const imageFileType = cloneImg.getMIME().split("/")[1];
+  const storeLocation = createStorageDirectory(userHashKey);
+
   try {
-    let storeLocation = "./storage/" + userHashKey;
-    if (!fs.existsSync(storeLocation)) {
-      fs.mkdirSync(storeLocation);
-      console.log("Directory created:", storeLocation);
-    }
     console.log(
       "randomPosition:",
       Number(randomPosition.x),
@@ -183,6 +189,31 @@ function autoDelete(userid) {
 
   //every 1 month it will delete the userid whole folder
 }
+
+function getStoragePath(userHashKey, fileName) {
+  const baseDirectory = path.join(__dirname, "storage");
+  const sanitizedUserHashKey = sanitizePath(userHashKey);
+  const sanitizedFileName = sanitizePath(fileName);
+  const fullPath = path.join(
+    baseDirectory,
+    sanitizedUserHashKey,
+    sanitizedFileName
+  );
+
+  if (!fullPath.startsWith(baseDirectory)) {
+    throw new Error("Invalid path");
+  }
+
+  return fullPath; // Use this path for file operations
+}
+
+function validateInput(input) {
+  const regex = /^[a-zA-Z0-9_-]+$/; // Adjust as necessary
+  if (!regex.test(input)) {
+    throw new Error("Invalid input");
+  }
+}
+
 module.exports = {
   handleRandom: async function (req, res) {
     let randomAnimal = getRandomAnimal(0, animals.length - 1);
@@ -290,13 +321,26 @@ module.exports = {
     }
   },
   handleStorage: async function (req, res) {
-    const { userHashKey, fileName } = req.params;
-    //this will make the storage full , maybe need to find better solution here...
-    //another solution is to use mongodb to store json data or more like objects with the array type
-    // let newIp = ip.replace(/::/g, "_");
-    let read = fs.readFileSync("./storage/" + userHashKey + "/" + fileName);
-    console.log(read);
-    res.send(read);
-    res.end();
+    try {
+      const { userHashKey, fileName } = req.params;
+      //this will make the storage full , maybe need to find better solution here...
+      //another solution is to use mongodb to store json data or more like objects with the array type
+      // let newIp = ip.replace(/::/g, "_");
+
+      // Validate and sanitize inputs
+      validateInput(userHashKey);
+      validateInput(fileName);
+
+      const storagePath = getStoragePath(userHashKey, fileName);
+      const read = fs.readFileSync(storagePath);
+
+      // let read = fs.readFileSync("./storage/" + userHashKey + "/" + fileName);
+      console.log(read);
+      res.send(read);
+      res.end();
+    } catch (error) {
+      console.error(error);
+      res.status(400).send("Invalid request");
+    }
   },
 };
