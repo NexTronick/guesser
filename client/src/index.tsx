@@ -11,7 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 axios.defaults.headers.get["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 axios.defaults.baseURL =
-  process.env.REACT_ENV_BACKEND_URL || "https://guessapi.natrajpadwani.site";
+  process.env.REACT_ENV_BACKEND_URL || "https://guessapi.natrajpadwani.com";
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 axios.defaults.withCredentials = true;
